@@ -1,5 +1,7 @@
 # Thermopylae: My Personal Chrome Theme
 
+![](./preview.png)
+
 If you want to use it:
 
 1. Open chrome://extensions
@@ -8,4 +10,4 @@ If you want to use it:
 4. Open this folder
 5. Done
 
-About the "_static" folder: Previously This is the static version of chrome theme. I don't use it anymore, but I don't want to delete it either.
+About the "static" folder: Previously This is the static version of chrome theme. I don't use it anymore, but I don't want to delete it either.
