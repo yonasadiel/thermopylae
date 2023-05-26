@@ -1,0 +1,16 @@
+{
+    "name": "Yonas Adiel",
+    "version": "0.1.0",
+    "manifest_version": 3,
+    "description": "Personal new tab page for Yonas Adiel",
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "chrome_url_overrides": {
+      "newtab": "index.html"
+    },
+    "icons": {
+      "128": "128.png"
+    },
+    "permissions": ["storage"]
+}
