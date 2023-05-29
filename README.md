@@ -10,4 +10,4 @@ If you want to use it:
 4. Open this folder
 5. Done
 
-About the "static" folder: Previously This is the static version of chrome theme. I don't use it anymore, but I don't want to delete it either.
+About the "theme" folder: Previously This is the static version of chrome theme. I don't use it anymore, but I don't want to delete it either.
