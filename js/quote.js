@@ -1,8 +1,8 @@
 const QUOTE_LOCAL_STORAGE_KEY = 'quote';
 const QUOTE_PRELOADED_RESOURCES = [
-  'js/quote-life.json',
-  'js/quote-pragmatic-programmer.json',
-  'js/quote-programming.json',
+  'data/quote-life.json',
+  'data/quote-pragmatic-programmer.json',
+  'data/quote-programming.json',
 ];
 const preloadedQuotes = [];
 const activeQuotes = [];
@@ -80,12 +80,8 @@ const renderQuotes = () => {
 }
 
 const getPos = (el) => {
-  let { offsetTop, offsetLeft } = el;
-  while (el = el.offsetParent) {
-    offsetLeft += el.offsetLeft;
-    offsetTop += el.offsetTop;
-  }
-  return [offsetTop, offsetLeft];
+  let { top, left } = el.getBoundingClientRect();
+  return [top, left];
 }
 
 const changePreloadedQuotes = (preloadedName, shouldActive) => {
@@ -133,9 +129,7 @@ const showQuotePickerDialog = () => {
   }
 
   const preloadedPickerButton = document.getElementById('preloaded-picker');
-  let [ t, l ] = getPos(preloadedPickerButton);
-  t += preloadedPickerButton.offsetHeight;
-  l += preloadedPickerButton.offsetLeft;
+  let { bottom: t, right: l } = preloadedPickerButton.getBoundingClientRect()
 
   const quotePreloadedPickerDialog = document.getElementById('quote-preloaded-picker-dialog');
   quotePreloadedPickerDialog.style = `top: ${t}px; left: ${l}px`;

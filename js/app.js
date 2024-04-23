@@ -1,3 +1,5 @@
-particlesJS.load('particles-js', 'js/particles.json', function() {
+particlesJS.load('particles-js', 'data/particles.json', function() {
   // callback
 });
+
+document.getElementById('terminal-input').focus()

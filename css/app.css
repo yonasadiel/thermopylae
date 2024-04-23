@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    overflow-y: hidden;
+}
+
+body {
+    height: 100vh;
+    background-color: #000000;
+    color: #fff;
+    font-family: 'Raleway', sans-serif;
+}
+
+#particles-js, .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: -1;
+}
+
+.background {
+    /* background-image: url('../images/background.png'); */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left bottom;
+}
+
+.main {
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.center {
+    position: relative;
+}
+
+.quote {
+    position: absolute;
+    top: 60px; /* based on the height of the terminal */
+}

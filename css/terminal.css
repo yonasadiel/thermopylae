@@ -1,0 +1,36 @@
+.terminal {
+  width: 50vw;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.terminal input {
+  width: 100%;
+  background: transparent;
+  color: #FFFFFF;
+  border-width: 0 0 2px 0;
+  padding: 5px 0;
+  outline: none!important;
+  font-family: 'Raleway', sans-serif;
+  font-size: 24px;
+  text-align: left;
+}
+
+#bangs {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(10, 10, 10, .8);
+  z-index: 100;
+}
+
+#bangs .suggestion {
+  padding: 0.5em 0 0.5em 0;
+  border: 0 solid #ffffff;
+  border-width: 0 0 0px 0;
+}
+
+#bangs .suggestion .pattern {
+  font-size: 24px;
+  color: #aaa;
+  margin-bottom: 0.25em;
+}
