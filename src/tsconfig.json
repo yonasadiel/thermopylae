@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "module": "ESNEXT",
+        "rootDir": "./",
+        "strict": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "typeRoots": ["./types"],
+        "forceConsistentCasingInFileNames": true
+    }
+}
