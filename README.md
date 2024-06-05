@@ -2,12 +2,17 @@
 
 ![](./preview.png)
 
-If you want to use it:
+## Installation
+
+#### Building the page
+
+1. Run `npm install` to install dependencies
+2. Run `npm run build` to build the page to `out` folder
+
+#### Use the extension
 
 1. Open chrome://extensions
 2. Toggle on "Developer mode"
 3. Click "Load unpacked"
-4. Open this folder
+4. Open the `out` folder
 5. Done
-
-About the "theme" folder: Previously This is the static version of chrome theme. I don't use it anymore, but I don't want to delete it either.

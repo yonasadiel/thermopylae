@@ -12,7 +12,7 @@
     margin-bottom: .4em;
 }
 
-.quote .text-line #text {
+.quote .text-line span {
     font-size: 30px;
 }
 
@@ -25,7 +25,7 @@
     margin-bottom: .4em;
 }
 
-.quote .subtext-line #subtext {
+.quote .subtext-line span {
     /* position: absolute; */
     right: 20px;
 }
