@@ -1,4 +1,3 @@
-"use client"
 import { KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { filterBangs, loadBangs, preprocessBangs, processBang, recordHistory } from './util';
 import { Bang, ProcessedBang } from './types';

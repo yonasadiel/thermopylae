@@ -4,6 +4,7 @@ export const loadBangs = (): Promise<BangConfig[]> => {
     // TODO: load this from local storage
     const BANGS: string[] = [
         'data/bangs-work.json',
+        'data/bangs-dev.json',
     ];
     return Promise.all(
         BANGS.map((url) => fetch(url).then((res) => res.json()))
