@@ -174,7 +174,13 @@ const processBang = (bang: Bang, query: string): ProcessedBang => {
     };
 };
 
-const recordHistory = (history: { key: string; value: string }[]): void => {
+// Control how recency affects the suggestion ranking.
+// 1 means only suggest the last one, ignore the old and 0 means
+// no history is recorded.
+const RECENCY_FACTOR = 0.05;
+const HISTORY_PRECISION = 100_000;
+
+export const recordHistory = (history: { key: string; value: string }[]): void => {
     const terminal = JSON.parse(localStorage.getItem('terminal') || '{}') as LocalConfig;
     if (!terminal.history) terminal.history = {}
     for (let i = 0; i < history.length; i++) {
@@ -182,10 +188,15 @@ const recordHistory = (history: { key: string; value: string }[]): void => {
         if (!(key in terminal.history)) {
             terminal.history[key] = {};
         }
+        let leftover = HISTORY_PRECISION;
+        for (let v in terminal.history[key]) {
+            terminal.history[key][v] = Math.floor(terminal.history[key][v] * (1 - RECENCY_FACTOR));
+            leftover -= terminal.history[key][v];
+        }
         if (!(value in terminal.history[key])) {
             terminal.history[key][value] = 0;
         }
-        terminal.history[key][value] += 1;
+        terminal.history[key][value] += leftover;
     }
     localStorage.setItem('terminal', JSON.stringify(terminal));
 };
