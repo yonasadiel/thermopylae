@@ -1,14 +1,25 @@
-export function loadParticles() {
-    const scriptElement = document.createElement('script');
-    scriptElement.src = 'js/particles.min.js';
-    scriptElement.addEventListener('load', function () {
-        window.particlesJS('particles-js', particlesConfig, function () {
-            // callback
-        });
-    });
+import { useEffect } from "react";
+import { useSettings } from "../../hooks";
 
-    document.head.appendChild(scriptElement);
+const Particles = () => {
+    const { settings } = useSettings();
+    useEffect(() => {
+        const scriptElement = document.createElement('script');
+        scriptElement.src = 'js/particles.min.js';
+        scriptElement.addEventListener('load', function () {
+            window.particlesJS('particles-js', particlesConfig, function () {
+                // callback
+            });
+        });
+
+        document.head.appendChild(scriptElement);
+    }, []);
+    return (
+        <div id="particles-js" style={{display: settings.backgroundParticlesEnabled ? 'block' : 'none'}}></div>
+    );
 }
+
+export default Particles;
 
 const particlesConfig = {
     "particles": {

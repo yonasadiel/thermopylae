@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { loadPreloadedQuotes, loadQuotes } from './util';
-import { Quote as QuoteT } from './types';
-import './index.css'
+import { Quote } from './types';
+import './Quote.css'
 
 const ENABLE_NEXT_BUTTON = false;
 const QUOTE_PRELOADED_RESOURCES = [
@@ -10,8 +10,8 @@ const QUOTE_PRELOADED_RESOURCES = [
     'data/quote-programming.json',
 ];
 
-export default function Quote() {
-    const [activeQuotes, setActiveQuotes] = useState<QuoteT[]>([]);
+const Quote = () => {
+    const [activeQuotes, setActiveQuotes] = useState<Quote[]>([]);
     useEffect(() => {
         loadPreloadedQuotes(QUOTE_PRELOADED_RESOURCES)
             .then((preloadedQuotes) => setActiveQuotes(loadQuotes(preloadedQuotes)));
@@ -34,3 +34,5 @@ export default function Quote() {
         </div>
     );
 }
+
+export default Quote;
