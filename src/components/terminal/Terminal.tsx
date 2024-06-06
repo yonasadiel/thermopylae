@@ -1,7 +1,7 @@
 import { KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { filterBangs, loadBangs, preprocessBangs, processBang, recordHistory } from './util';
 import { Bang, ProcessedBang } from './types';
-import './index.css';
+import './Terminal.css';
 
 export default function Terminal() {
     const inputRef = useRef<HTMLInputElement>(null);
@@ -24,7 +24,7 @@ export default function Terminal() {
         });
     }, []);
 
-    const handleKeyUp = (ev?: KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (ev?: KeyboardEvent<HTMLInputElement>) => {
         if (ev?.code === 'Enter') {
             if (!!processedBang) {
                 recordHistory(processedBang.history);
@@ -48,7 +48,7 @@ export default function Terminal() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.currentTarget.value)}
-                onKeyUp={(ev) => handleKeyUp(ev)}
+                onKeyDown={(ev) => handleKeyDown(ev)}
                 ref={inputRef}
                 list="bangs" />
             <div

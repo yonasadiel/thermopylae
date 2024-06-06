@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import Terminal from './components/terminal';
+import Terminal from './components/terminal/Terminal';
 import Quote from './components/quote/Quote';
 import Settings from './components/settings/Settings';
 import Particles from './components/particles/Particles';
 import { useSettings } from './hooks';
-import './app.css';
+import './App.css';
 
 const App = () => {
     const [openSettings, setOpenSettings] = useState<boolean>(false);
@@ -12,8 +12,8 @@ const App = () => {
     return (
         <div className="main">
             <Particles />
+            <img src={settings.backgroundImagePath} />
             <div className="center">
-                <img src={settings.backgroundImagePath} />
                 <Terminal />
                 <Quote />
             </div>
