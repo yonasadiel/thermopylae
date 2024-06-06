@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import BackgroundSettings from './Background';
+import QuoteSettings from './Quote';
 import './Settings.css';
 
 export interface SettingsProps {
@@ -31,10 +32,6 @@ export default function Settings(props: SettingsProps) {
             </div>
         </div>
     )
-}
-
-const QuoteSettings = () => {
-    return <div></div>
 }
 
 const TerminalSettings = () => {

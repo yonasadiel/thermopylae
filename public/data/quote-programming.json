@@ -1,9 +1,0 @@
-{
-  "name": "programming",
-  "title": "programming",
-  "quotes": [
-    {"text":"Code Wins Arguments", "subtext": ""},
-    {"text":"Defensive Programming","subtext":"Defensive programming is a form of defensive design intended to develop programs that are capable of detecting potential security abnormalities and make predetermined responses. It ensures the continuing function of a piece of software under unforeseen circumstances. Defensive programming practices are often used where high availability, safety, or security is needed."},
-    {"text":"Do it asynchronously","subtext":"Delegate. always. once you delegated, a new thread started. you are ready to listen to new “requests”, even if you are single-threaded (but you do have a multi-threading choice, shown below), but you still can be fast, like Redis! as long as your I/O is not blocked.<br/><br/>So when you get a task from the project manager. you should try to avoid doing it yourself, and try to assign it to a junior dev, as fresh as possible. use greedy thinking.<br/><br/>But what if you don't have anyone to delegate? mentor, keep doing it. It's your job.<br/><br/>- <a href=\"https://iorilan.medium.com/how-to-delegate-tasks-as-a-senior-lead-engineer-ad5136eb68a0\">Lory</a>"}
-  ]
-}

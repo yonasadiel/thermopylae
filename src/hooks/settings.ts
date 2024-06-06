@@ -4,6 +4,9 @@ import { Settings } from '../components/settings/types';
 export const defaultSettings: Settings = {
     backgroundImagePath: undefined,
     backgroundParticlesEnabled: true,
+    quoteEnabled: true,
+    quotePreloaded: ['pragmatic-programmer', 'programming'],
+    quoteCustom: [],
 }
 
 export interface SettingsContext {

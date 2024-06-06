@@ -1,31 +1,31 @@
 import { useEffect, useState } from 'react';
-import { loadPreloadedQuotes, loadQuotes } from './util';
+import { filterPreloadedQuotes } from './util';
 import { Quote } from './types';
+import { useSettings } from '../../hooks';
+import preloadedQuotes from './preloaded';
 import './Quote.css'
 
 const ENABLE_NEXT_BUTTON = false;
-const QUOTE_PRELOADED_RESOURCES = [
-    'data/quote-life.json',
-    'data/quote-pragmatic-programmer.json',
-    'data/quote-programming.json',
-];
 
 const Quote = () => {
     const [activeQuotes, setActiveQuotes] = useState<Quote[]>([]);
+    const { settings } = useSettings();
     useEffect(() => {
-        loadPreloadedQuotes(QUOTE_PRELOADED_RESOURCES)
-            .then((preloadedQuotes) => setActiveQuotes(loadQuotes(preloadedQuotes)));
-    }, [QUOTE_PRELOADED_RESOURCES]);
+        setActiveQuotes([
+            ...filterPreloadedQuotes(preloadedQuotes, settings.quotePreloaded),
+            ...settings.quoteCustom,
+        ]);
+    }, [settings.quotePreloaded, settings.quoteCustom]);
 
     const seed = Math.floor((new Date()).getTime() / (60 * 60 * 1000));
     const quoteToShow = activeQuotes[seed % activeQuotes.length] || {};
 
     return (
-        <div className="quote">
-            <div className="text-line" style={{ maxWidth: 500 }}>
+        <div className="quote" style={{ display: settings.quoteEnabled ? 'flex' : 'none'}}>
+            <div className="text-line">
                 <span>{quoteToShow.text}</span>
             </div>
-            <div className="subtext-line" style={{ maxWidth: 600 }}>
+            <div className="subtext-line">
                 <span>{quoteToShow.subtext}</span>
             </div>
             {ENABLE_NEXT_BUTTON && (
