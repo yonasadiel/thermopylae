@@ -1,4 +1,4 @@
-import { Bang, BangConfig, LocalConfig, Param, ParamOption, ProcessedBang, ProcessedParam } from "./types";
+import { Bang, BangConfig, LocalConfig, Param, ParamOption, ProcessedBang, ProcessedParam } from '../../models/terminal';
 
 export const loadBangs = (): Promise<BangConfig[]> => {
     // TODO: load this from local storage

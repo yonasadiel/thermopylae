@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useSettings } from "../../hooks";
+import { useEffect } from 'react';
+import { useSettings } from '../../hooks';
 
 const Particles = () => {
     const { settings } = useSettings();

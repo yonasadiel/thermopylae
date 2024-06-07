@@ -1,4 +1,4 @@
-import { Quote } from '../quote/types';
+import { Quote } from './quote';
 
 export interface Settings {
     backgroundImagePath?: string;

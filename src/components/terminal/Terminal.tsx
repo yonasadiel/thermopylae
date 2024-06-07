@@ -1,6 +1,6 @@
 import { KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { filterBangs, loadBangs, preprocessBangs, processBang, recordHistory } from './util';
-import { Bang, ProcessedBang } from './types';
+import { Bang, ProcessedBang } from '../../models/terminal';
 import './Terminal.css';
 
 export default function Terminal() {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { filterPreloadedQuotes } from './util';
-import { Quote } from './types';
+import { Quote } from '../../models/quote';
 import { useSettings } from '../../hooks';
 import preloadedQuotes from './preloaded';
 import './Quote.css'

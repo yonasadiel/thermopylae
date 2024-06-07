@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { Settings } from '../components/settings/types';
+import { Settings } from '../models/settings';
 
 export const defaultSettings: Settings = {
     backgroundImagePath: undefined,

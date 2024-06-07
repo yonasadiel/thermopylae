@@ -1,4 +1,4 @@
-import { PreloadedQuote } from './types';
+import { PreloadedQuote } from '../../models/quote';
 
 const preloadedQuotes: PreloadedQuote[] = [
   {

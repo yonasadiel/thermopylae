@@ -1,4 +1,4 @@
-import { PreloadedQuote, Quote } from './types';
+import { PreloadedQuote, Quote } from '../../models/quote';
 
 // Fisher–Yates shuffle, in place
 export function shuffle(array: Quote[]): Quote[] {
