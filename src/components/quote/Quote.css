@@ -35,18 +35,3 @@
 .quote .nav-line {
     font-size: 8px;
 }
-
-a {
-    color: #aaa;
-}
-
-button {
-    border-width: 0;
-    font-family: unset;
-    font-size: unset;
-    color: unset;
-    background-color: unset;
-    cursor: pointer;
-    border-bottom: 0.5px solid #fff;
-    border-color: #fff;
-}
