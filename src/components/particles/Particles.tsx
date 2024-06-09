@@ -1,10 +1,14 @@
-import { useEffect } from 'react';
-import { useSettings } from '../../hooks';
+import { useEffect } from "react";
+import { useSettings } from "../../hooks";
 
 const Particles = () => {
   const { settings } = useSettings();
   useEffect(() => {
-    window.particlesJS("particles-js", settings.particlesConfig, () => {});
+    window.particlesJS(
+      "particles-js",
+      settings.backgroundParticlesConfig,
+      () => {}
+    );
   });
   return (
     <div

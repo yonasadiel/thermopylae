@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 import { Settings } from '../models/settings';
 import { Load, Save, Database } from '../dal/db';
-import { DEFAULT_BACKGROUND_PARTICLES_ENABLED, DEFAULT_GROUPS, DEFAULT_IMAGE_PATH } from '../components/settings/defaults';
+import { DEFAULT_BACKGROUND_PARTICLES_ENABLED, DEFAULT_GROUPS, DEFAULT_IMAGE_PATH, DEFAULT_PARTICLE_SETTINGS } from '../components/settings/defaults';
 
 
 export const defaultSettings: Settings = {
@@ -10,7 +10,8 @@ export const defaultSettings: Settings = {
     quoteEnabled: true,
     quotePreloaded: ['pragmatic-programmer', 'programming'],
     quoteCustom: [],
-    terminalGroup: DEFAULT_GROUPS,
+    backgroundParticlesConfig: DEFAULT_PARTICLE_SETTINGS,
+    terminalURLs: DEFAULT_GROUPS,
 }
 
 export interface SettingsContext {

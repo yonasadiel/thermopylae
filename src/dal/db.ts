@@ -1,5 +1,5 @@
 export enum Database {
-    Settings = "settings"
+    Settings = "settings",
 }
 
 // Loads the data from the database.
