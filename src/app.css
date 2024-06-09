@@ -14,6 +14,16 @@ body {
     font-family: 'Raleway', sans-serif;
 }
 
+input[type=text] {
+    background: transparent;
+    color: #FFFFFF;
+    border-width: 0 0 2px 0;
+    padding: 5px 0;
+    outline: none!important;
+    font-family: 'Raleway', sans-serif;
+    text-align: left;
+  }
+
 #particles-js, .background {
     position: fixed;
     top: 0;

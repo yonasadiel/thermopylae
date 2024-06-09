@@ -18,8 +18,7 @@ const BackgroundSettings = () => {
                     <input
                         type="checkbox"
                         checked={settings.backgroundParticlesEnabled}
-                        onChange={(e) => {
-                        setSettingValue('backgroundParticlesEnabled', !!e.currentTarget.checked)}} />
+                        onChange={(e) => setSettingValue('backgroundParticlesEnabled', !!e.currentTarget.checked)} />
                     <span>Enabled</span>
                 </p>
             </div>

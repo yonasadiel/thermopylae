@@ -14,6 +14,7 @@
 
 .quote .text-line span {
     font-size: 30px;
+    white-space: pre-line;
 }
 
 .quote .subtext-line {
@@ -28,41 +29,9 @@
 .quote .subtext-line span {
     /* position: absolute; */
     right: 20px;
+    white-space: pre-line;
 }
 
 .quote .nav-line {
     font-size: 8px;
-}
-
-a {
-    color: #aaa;
-}
-
-button {
-    border-width: 0;
-    font-family: unset;
-    font-size: unset;
-    color: unset;
-    background-color: unset;
-    cursor: pointer;
-    border-bottom: 0.5px solid #fff;
-    border-color: #fff;
-}
-
-dialog#quote-preloaded-picker-dialog {
-    padding: 1em;
-    background-color: rgba(0, 0, 0, .5);
-    color: #fff;
-}
-
-dialog#quote-preloaded-picker-dialog h3 {
-    margin-bottom: 1em;
-}
-
-dialog#quote-preloaded-picker-dialog .checkbox-item {
-    display: block;
-}
-
-dialog#quote-preloaded-picker-dialog button {
-    margin-top: 1em;
 }
