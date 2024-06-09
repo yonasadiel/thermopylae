@@ -6,4 +6,5 @@ export interface Settings {
     quoteEnabled: boolean;
     quotePreloaded: string[];
     quoteCustom: Quote[];
+    terminalGroup: string[];
 }
