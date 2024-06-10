@@ -12,8 +12,12 @@ const QuoteSettings = () => {
             setSettingValue('quotePreloaded', [...settings.quotePreloaded.filter((v) => v !== name)]);
         }
     }
-    const updateCustomQuote = (idx: number, q: Quote) =>
+    const handleAddCustomQuote = () =>
+        setSettingValue('quoteCustom', [...settings.quoteCustom, { text: '' }]);
+    const handleUpdateCustomQuote = (idx: number, q: Quote) =>
         setSettingValue('quoteCustom', [...settings.quoteCustom.slice(0, idx), q, ...settings.quoteCustom.slice(idx+1)]);
+    const handleDeleteCustomQuote = (idx: number) =>
+        setSettingValue('quoteCustom', [...settings.quoteCustom.filter((_, i) => i !== idx)]);
 
     return (
         <div className="quote-settings">
@@ -43,18 +47,26 @@ const QuoteSettings = () => {
                 <label>Custom Quotes</label>
                 {settings.quoteCustom.map((q, idx) => (
                     <div key={idx} className="custom-row">
-                        <input
-                            type="text"
-                            value={q.text}
-                            placeholder="Main Text"
-                            onChange={(e) => updateCustomQuote(idx, { text: e.currentTarget.value, subtext: q.subtext })} />
-                        <textarea placeholder="Subtext here..." cols={40} onChange={(e) => updateCustomQuote(idx, { text: q.text, subtext: e.currentTarget.value})}>{q.subtext}</textarea>
+                        <div>
+                            <input
+                                type="text"
+                                value={q.text}
+                                placeholder="Main Text"
+                                onChange={(e) => handleUpdateCustomQuote(idx, { text: e.currentTarget.value, subtext: q.subtext })} />
+                            <button
+                                type="button"
+                                className="delete"
+                                onClick={() => handleDeleteCustomQuote(idx)}>
+                                Delete
+                            </button>
+                        </div>
+                        <textarea placeholder="Subtext here..." cols={40} onChange={(e) => handleUpdateCustomQuote(idx, { text: q.text, subtext: e.currentTarget.value})}>{q.subtext}</textarea>
                     </div>
                 ))}
                 <p>
                     <button
                         type="button"
-                        onClick={() => setSettingValue('quoteCustom', [...settings.quoteCustom, { text: '' }])}>
+                        onClick={() => handleAddCustomQuote()}>
                         add
                     </button>
                 </p>
