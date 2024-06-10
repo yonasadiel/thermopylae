@@ -9,7 +9,7 @@ export interface SettingsProps {
   onClose: () => void;
 }
 
-enum MenuItem {
+enum MenuName {
   Background = "background",
   Quote = "quote",
   Terminal = "terminal",
@@ -17,23 +17,23 @@ enum MenuItem {
 
 interface Menu {
   name: string;
-  type: MenuItem;
+  type: MenuName;
   elem: React.ReactElement<any, any>;
 }
 
 const Menus: Menu[] = [
   {
     name: "Background",
-    type: MenuItem.Background,
+    type: MenuName.Background,
     elem: <BackgroundSettings />,
   },
-  { name: "Quote", type: MenuItem.Quote, elem: <QuoteSettings /> },
-  { name: "Terminal", type: MenuItem.Terminal, elem: <TerminalSettings /> },
+  { name: "Quote", type: MenuName.Quote, elem: <QuoteSettings /> },
+  { name: "Terminal", type: MenuName.Terminal, elem: <TerminalSettings /> },
 ];
 
 export default function Settings(props: SettingsProps) {
   const { onClose } = props;
-  const [menu, setMenu] = useState(MenuItem.Background);
+  const [menu, setMenu] = useState(MenuName.Background);
 
   return (
     <div className="settings">
@@ -41,9 +41,13 @@ export default function Settings(props: SettingsProps) {
         <img alt="cross" src="/assets/cross.svg" width="20px" height="20px" />
       </div>
       <div className="navbar">
-        {Menus.map((item) =>
-          createMenuItem(menu, setMenu, item.type, item.name)
-        )}
+        {Menus.map((item) => (
+          <MenuItemComponent
+            isActive={menu == item.name}
+            onClick={() => setMenu(item.type)}
+            value={item.name}
+          />
+        ))}
         <div className="menu" onClick={() => {}}>
           Restore Defaults
         </div>
@@ -56,16 +60,14 @@ export default function Settings(props: SettingsProps) {
   );
 }
 
-const createMenuItem = (
-  currentItem: MenuItem,
-  setMenu: (value: any) => void,
-  menuItem: MenuItem,
-  menuName: string
-): React.ReactElement<any, any> => (
-  <div
-    className={`menu ${currentItem === menuItem ? "active" : ""}`}
-    onClick={() => setMenu(menuItem)}
-  >
-    {menuName}
+interface MenuProp {
+  isActive: boolean;
+  value: string;
+  onClick: () => void;
+}
+
+const MenuItemComponent = ({ isActive, value, onClick }: MenuProp) => (
+  <div className={`menu${isActive ? " active" : ""}`} onClick={onClick}>
+    {value}
   </div>
 );
