@@ -13,7 +13,7 @@ const QuoteSettings = () => {
         }
     }
     const updateCustomQuote = (idx: number, q: Quote) =>
-        setSettingValue('quoteCustom', [...settings.quoteCustom.slice(0, idx), q, ...settings.quoteCustom.slice(idx+1)]);
+        setSettingValue('quoteCustom', [...settings.quoteCustom.slice(0, idx), q, ...settings.quoteCustom.slice(idx + 1)]);
 
     return (
         <div className="quote-settings">
@@ -23,7 +23,7 @@ const QuoteSettings = () => {
                     <input
                         type="checkbox"
                         checked={settings.quoteEnabled}
-                        onChange={(e) => setSettingValue('quoteEnabled', e.currentTarget.checked)}/>
+                        onChange={(e) => setSettingValue('quoteEnabled', e.currentTarget.checked)} />
                     <span>Enabled</span>
                 </p>
             </div>
@@ -48,7 +48,7 @@ const QuoteSettings = () => {
                             value={q.text}
                             placeholder="Main Text"
                             onChange={(e) => updateCustomQuote(idx, { text: e.currentTarget.value, subtext: q.subtext })} />
-                        <textarea placeholder="Subtext here..." cols={40} onChange={(e) => updateCustomQuote(idx, { text: q.text, subtext: e.currentTarget.value})}>{q.subtext}</textarea>
+                        <textarea placeholder="Subtext here..." cols={40} onChange={(e) => updateCustomQuote(idx, { text: q.text, subtext: e.currentTarget.value })}>{q.subtext}</textarea>
                     </div>
                 ))}
                 <p>
