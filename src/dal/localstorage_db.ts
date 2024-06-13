@@ -1,5 +1,4 @@
-import { Database, ConfigKeys } from "./db";
-
+import { ConfigKeys } from "./types";
 
 class LocalStorageDB {
     Save(database: ConfigKeys, data: any) {
@@ -12,9 +11,5 @@ class LocalStorageDB {
         return JSON.parse(data);
     }
 }
-
-
-// For Type checking.
-const _: Database = new LocalStorageDB();
 
 export default LocalStorageDB;
