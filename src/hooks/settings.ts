@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import { Settings } from '../models/settings';
+import db from '../dal/storage';
 
 export const defaultSettings: Settings = {
     backgroundImagePath: undefined,
@@ -14,15 +15,18 @@ export interface SettingsContext {
     setSettings: (newSettings: Settings) => void;
 }
 
+export const getCurrentSettings = (): Settings => {
+    return db.load('settings') ?? defaultSettings;
+};
+
 export const SettingsContext = createContext<SettingsContext>({ settings: defaultSettings, setSettings: () => {}});
 
 const useSettings = () => {
     const { settings, setSettings } = useContext(SettingsContext);
     const setSettingValue = <K extends keyof Settings>(key: K, value: Settings[K]) => {
-        setSettings({
-            ...settings,
-            [key]: value,
-        })
+        const newSettings: Settings = { ...settings, [key]: value, };
+        db.save('settings', newSettings);
+        setSettings(newSettings);
     }
     return {
         settings,
