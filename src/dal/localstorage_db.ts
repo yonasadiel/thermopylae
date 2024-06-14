@@ -1,16 +1,15 @@
-import { ConfigKeys } from "./types";
+import { Config } from './types';
 
 
-class LocalStorageDB {
-    Save(database: ConfigKeys, data: any) {
+const localStorageDB = {
+    save<K extends keyof Config>(database: K, data: Config[K]): void {
         localStorage.setItem(database, JSON.stringify(data));
-    }
-
-    Load(database: ConfigKeys): any {
+    },
+    load<K extends keyof Config>(database: K): Config[K] | null {
         const data = localStorage.getItem(database);
-        if (!data) return undefined;
+        if (!data) return null;
         return JSON.parse(data);
-    }
+    },
 }
 
-export default LocalStorageDB;
+export default localStorageDB;
