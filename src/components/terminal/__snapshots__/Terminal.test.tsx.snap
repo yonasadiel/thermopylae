@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Terminal should render correctly 1`] = `
+<body>
+  <div>
+    <div
+      class="terminal"
+    >
+      <input
+        list="bangs"
+        type="text"
+        value=""
+      />
+      <div
+        id="bangs"
+      />
+    </div>
+  </div>
+</body>
+`;

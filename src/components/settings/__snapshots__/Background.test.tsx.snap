@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BackgroundSettings should render correctly 1`] = `
+<body>
+  <div>
+    <div
+      class="background-settings"
+    >
+      <div
+        class="input-group"
+      >
+        <label>
+          Background Image
+        </label>
+        <input
+          type="file"
+          value=""
+        />
+      </div>
+      <div
+        class="input-group"
+      >
+        <label>
+          Particles
+        </label>
+        <p>
+          <input
+            checked=""
+            type="checkbox"
+          />
+          <span>
+            Enabled
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+`;
