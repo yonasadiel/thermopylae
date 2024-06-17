@@ -1,4 +1,6 @@
 import { Database } from './types';
-import LocalStorageDB from './localstorage_db';
+import localStorageDB from './localstorage_db';
 
-export const storage: Database = new LocalStorageDB();
+const db: Database = localStorageDB;
+
+export default db;

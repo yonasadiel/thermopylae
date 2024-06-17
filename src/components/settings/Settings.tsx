@@ -4,7 +4,7 @@ import BackgroundSettings from "./Background";
 import QuoteSettings from "./Quote";
 import TerminalSettings from "./Terminal";
 import "./Settings.css";
-import { storage } from '../../dal/storage';
+import db from '../../dal/storage';
 import { ConfigKeys } from '../../dal/db';
 
 export interface SettingsProps {
@@ -53,7 +53,7 @@ export default function Settings(props: SettingsProps) {
                 <div className="menu" onClick={() => {
                     const res = confirm("Are you sure you want to restore defaults?");
                     if (!res) return;
-                    storage.RestoreDefaults(ConfigKeys.Settings);
+                    db.restore(ConfigKeys.Settings);
                     window.location.reload();
                 }}>
                     Restore Defaults

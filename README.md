@@ -16,3 +16,9 @@
 3. Click "Load unpacked"
 4. Open the `out` folder
 5. Done
+
+### TODO
+
+1. Change how the quote works, instead of toggling preloaded quotes, make it importable
+2. Enhance terminal suggestion on tab behavuor
+3. Update README with newer screenshots

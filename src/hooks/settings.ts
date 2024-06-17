@@ -1,12 +1,12 @@
 import { createContext, useContext } from "react";
 import { Settings } from "../models/settings";
-import { Load, Save, ConfigKeys } from "../dal/db";
 import {
     DEFAULT_BACKGROUND_PARTICLES_ENABLED,
     DEFAULT_GROUPS,
     DEFAULT_IMAGE_PATH,
     DEFAULT_PARTICLE_SETTINGS,
 } from "../components/settings/defaults";
+import db from '../dal/storage';
 
 export const defaultSettings: Settings = {
     backgroundImagePath: DEFAULT_IMAGE_PATH,
@@ -24,27 +24,18 @@ export interface SettingsContext {
 }
 
 export const getCurrentSettings = (): Settings => {
-    return (Load(ConfigKeys.Settings) as Settings) ?? defaultSettings;
+    return db.load('settings') ?? defaultSettings;
 };
 
-export const SettingsContext = createContext<SettingsContext>({
-    settings: defaultSettings,
-    setSettings: () => { },
-});
+export const SettingsContext = createContext<SettingsContext>({ settings: defaultSettings, setSettings: () => {}});
 
 const useSettings = () => {
     const { settings, setSettings } = useContext(SettingsContext);
-    const setSettingValue = <K extends keyof Settings>(
-        key: K,
-        value: Settings[K],
-    ) => {
-        const newSettings: Settings = {
-            ...settings,
-            [key]: value,
-        };
+    const setSettingValue = <K extends keyof Settings>(key: K, value: Settings[K]) => {
+        const newSettings: Settings = { ...settings, [key]: value, };
+        db.save('settings', newSettings);
         setSettings(newSettings);
-        Save(ConfigKeys.Settings, newSettings);
-    };
+    }
     return {
         settings,
         setSettingValue,
