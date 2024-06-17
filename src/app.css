@@ -9,19 +9,19 @@ html {
 
 body {
     height: 100vh;
-    background-color: #000000;
-    color: #fff;
     font-family: 'Raleway', sans-serif;
 }
 
 input[type=text] {
     background: transparent;
-    color: #FFFFFF;
+    color: var(--foreground-color);
     border-width: 0 0 2px 0;
     padding: 5px 0;
     outline: none!important;
     font-family: 'Raleway', sans-serif;
     text-align: left;
+    border-color: var(--foreground-color);
+    border-style: solid;
   }
 
 #particles-js, .background {
@@ -48,6 +48,8 @@ input[type=text] {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: var(--background-color);
+    color: var(--foreground-color);
 }
 
 .center {
@@ -60,14 +62,22 @@ input[type=text] {
     right: 10px;
 }
 
-.top-right a * {
+.top-right .settings-button {
+    display: block;
+    height: 20px;
     cursor: pointer;
-    transform: scale(1);
-    transition: transform 0.2s ease;
+    transform: scale(0) rotate(360deg);
+    transition: transform 1s ease;
+    border: 0;
+    background-color: unset;
 }
 
-.top-right a:hover * {
-    transform: scale(1.5);
+.top-right .settings-button.show:hover {
+    transform: scale(1.5) rotate(360deg);
+}
+
+.top-right .settings-button.show {
+    transform: scale(1) rotate(0);
 }
 
 .settings-mask {
