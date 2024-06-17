@@ -5,4 +5,5 @@ export enum ConfigKeys {
 export interface Database {
     Save: (database: ConfigKeys, data: any) => void;
     Load: (database: ConfigKeys) => any;
+    RestoreDefaults: (database: ConfigKeys) => void;
 }

@@ -10,6 +10,10 @@ class LocalStorageDB {
         if (!data) return undefined;
         return JSON.parse(data);
     }
+
+    RestoreDefaults(database: ConfigKeys) {
+        localStorage.removeItem(database);
+    }
 }
 
 export default LocalStorageDB;
