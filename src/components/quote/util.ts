@@ -20,7 +20,6 @@ export function filterPreloadedQuotes(preloadedQuotes: PreloadedQuote[], keys: s
         const preloaded = preloadedQuotes.find((v) => v.name === preloadedName);
         if (!preloaded) continue;
         activeQuotes.push(...preloaded.quotes);
-        console.log(`Loaded ${preloaded.quotes.length} ${preloaded.title} quotes`);
     }
     shuffle(activeQuotes);
     return activeQuotes;

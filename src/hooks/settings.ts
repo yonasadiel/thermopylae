@@ -3,8 +3,10 @@ import { Settings } from '../models/settings';
 import db from '../dal/storage';
 
 export const defaultSettings: Settings = {
-    backgroundImagePath: undefined,
-    backgroundParticlesEnabled: true,
+    themeForegroundColor: 'white',
+    themeBackgroundColor: 'black',
+    themeBackgroundImagePath: undefined,
+    themeBackgroundParticlesEnabled: true,
     quoteEnabled: true,
     quotePreloaded: ['pragmatic-programmer', 'programming'],
     quoteCustom: [],
