@@ -6,7 +6,7 @@ const Particles = () => {
     useEffect(() => {
         window.particlesJS(
             'particles-js',
-            settings.backgroundParticlesConfig,
+            settings.themeBackgroundParticlesConfig,
             () => { }
         );
     }, [settings.themeForegroundColor]);
