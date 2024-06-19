@@ -39,6 +39,25 @@ const ThemeSettings = () => {
                     <span>Enabled</span>
                 </p>
             </div>
+            <div className="input-group">
+                <label>Particles Settings</label>
+                <p>
+                    You can import your own settings from{' '}
+                    <a
+                        href="https://vincentgarreau.com/particles.js/"
+                        target="_blank"
+                        rel="noreferrer"
+                    >here</a>
+                </p>
+                <textarea
+                    onChange={(e) =>
+                        setSettingValue(
+                            'themeBackgroundParticlesConfig',
+                            JSON.parse(e.currentTarget.value),
+                        )}
+                    value={JSON.stringify(settings.themeBackgroundParticlesConfig)}
+                />
+            </div>
         </div>
     );
 }
