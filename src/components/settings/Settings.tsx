@@ -1,9 +1,9 @@
-import * as React from "react";
-import { useState } from "react";
-import BackgroundSettings from "./Background";
-import QuoteSettings from "./Quote";
-import TerminalSettings from "./Terminal";
-import "./Settings.css";
+import * as React from 'react';
+import { useState } from 'react';
+import BackgroundSettings from './Background';
+import QuoteSettings from './Quote';
+import TerminalSettings from './Terminal';
+import './Settings.css';
 import db from '../../dal/storage';
 import { ConfigKeys } from '../../dal/db';
 
@@ -12,9 +12,9 @@ export interface SettingsProps {
 }
 
 enum MenuName {
-    Background = "background",
-    Quote = "quote",
-    Terminal = "terminal",
+    Background = 'background',
+    Quote = 'quote',
+    Terminal = 'terminal',
 }
 
 interface Menu {
@@ -25,12 +25,12 @@ interface Menu {
 
 const Menus: Menu[] = [
     {
-        name: "Background",
+        name: 'Background',
         type: MenuName.Background,
         elem: <BackgroundSettings />,
     },
-    { name: "Quote", type: MenuName.Quote, elem: <QuoteSettings /> },
-    { name: "Terminal", type: MenuName.Terminal, elem: <TerminalSettings /> },
+    { name: 'Quote', type: MenuName.Quote, elem: <QuoteSettings /> },
+    { name: 'Terminal', type: MenuName.Terminal, elem: <TerminalSettings /> },
 ];
 
 export default function Settings(props: SettingsProps) {
@@ -51,7 +51,7 @@ export default function Settings(props: SettingsProps) {
                     />
                 ))}
                 <div className="menu" onClick={() => {
-                    const res = confirm("Are you sure you want to restore defaults?");
+                    const res = confirm('Are you sure you want to restore defaults?');
                     if (!res) return;
                     db.restore(ConfigKeys.Settings);
                     window.location.reload();
@@ -74,7 +74,7 @@ interface MenuProp {
 }
 
 const MenuItemComponent = ({ isActive, value, onClick }: MenuProp) => (
-    <div className={`menu${isActive ? " active" : ""}`} onClick={onClick}>
+    <div className={`menu${isActive ? ' active' : ''}`} onClick={onClick}>
         {value}
     </div>
 );

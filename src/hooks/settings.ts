@@ -1,18 +1,18 @@
-import { createContext, useContext } from "react";
-import { Settings } from "../models/settings";
+import { createContext, useContext } from 'react';
+import { Settings } from '../models/settings';
 import {
     DEFAULT_BACKGROUND_PARTICLES_ENABLED,
     DEFAULT_GROUPS,
     DEFAULT_IMAGE_PATH,
     DEFAULT_PARTICLE_SETTINGS,
-} from "../components/settings/defaults";
+} from '../components/settings/defaults';
 import db from '../dal/storage';
 
 export const defaultSettings: Settings = {
     backgroundImagePath: DEFAULT_IMAGE_PATH,
     backgroundParticlesEnabled: DEFAULT_BACKGROUND_PARTICLES_ENABLED,
     quoteEnabled: true,
-    quotePreloaded: ["pragmatic-programmer", "programming"],
+    quotePreloaded: ['pragmatic-programmer', 'programming'],
     quoteCustom: [],
     backgroundParticlesConfig: DEFAULT_PARTICLE_SETTINGS,
     terminalURLs: DEFAULT_GROUPS,

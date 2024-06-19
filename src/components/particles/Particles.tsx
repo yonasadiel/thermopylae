@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { useSettings } from "../../hooks";
+import { useEffect } from 'react';
+import { useSettings } from '../../hooks';
 
 const Particles = () => {
     const { settings } = useSettings();
     useEffect(() => {
         window.particlesJS(
-            "particles-js",
+            'particles-js',
             settings.backgroundParticlesConfig,
             () => { }
         );
@@ -14,7 +14,7 @@ const Particles = () => {
         <div
             id="particles-js"
             style={{
-                display: settings.backgroundParticlesEnabled ? "block" : "none",
+                display: settings.backgroundParticlesEnabled ? 'block' : 'none',
             }}
         ></div>
     );

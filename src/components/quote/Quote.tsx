@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { filterPreloadedQuotes } from "./util";
-import { Quote } from "../../models/quote";
-import { useSettings } from "../../hooks";
-import preloadedQuotes from "./preloaded";
-import "./Quote.css";
+import { useEffect, useState } from 'react';
+import { filterPreloadedQuotes } from './util';
+import { Quote } from '../../models/quote';
+import { useSettings } from '../../hooks';
+import preloadedQuotes from './preloaded';
+import './Quote.css';
 
 const ENABLE_NEXT_BUTTON = false;
 
@@ -23,7 +23,7 @@ const Quote = () => {
     return (
         <div
             className="quote"
-            style={{ display: settings.quoteEnabled ? "flex" : "none" }}
+            style={{ display: settings.quoteEnabled ? 'flex' : 'none' }}
         >
             <div className="text-line">
                 <span>{quoteToShow.text}</span>

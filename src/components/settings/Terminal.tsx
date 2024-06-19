@@ -1,5 +1,5 @@
-import { Key, useRef } from "react";
-import { useSettings } from "../../hooks";
+import { Key, useRef } from 'react';
+import { useSettings } from '../../hooks';
 
 const TerminalSettings = (): React.ReactElement<any, any> => {
     const { settings, setSettingValue } = useSettings();
@@ -14,7 +14,7 @@ const TerminalSettings = (): React.ReactElement<any, any> => {
                         <button
                             onClick={() => {
                                 setSettingValue(
-                                    "terminalURLs",
+                                    'terminalURLs',
                                     settings.terminalURLs.filter((_, i) => i !== index)
                                 );
                             }}
@@ -26,7 +26,7 @@ const TerminalSettings = (): React.ReactElement<any, any> => {
                 <input type="text" ref={newURLRef} placeholder="url"></input>
                 <button
                     onClick={() => {
-                        setSettingValue("terminalURLs", [
+                        setSettingValue('terminalURLs', [
                             ...settings.terminalURLs,
                             newURLRef.current?.value as string,
                         ]);

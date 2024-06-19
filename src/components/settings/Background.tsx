@@ -1,5 +1,5 @@
-import { useSettings } from "../../hooks";
-import "./Background.css";
+import { useSettings } from '../../hooks';
+import './Background.css';
 
 const BackgroundSettings = () => {
     const { settings, setSettingValue } = useSettings();
@@ -11,7 +11,7 @@ const BackgroundSettings = () => {
                 <input
                     type="file"
                     onChange={(e) =>
-                        setSettingValue("backgroundImagePath", e.target.value)
+                        setSettingValue('backgroundImagePath', e.target.value)
                     }
                     value={settings.backgroundImagePath}
                 />
@@ -24,7 +24,7 @@ const BackgroundSettings = () => {
                         checked={settings.backgroundParticlesEnabled}
                         onChange={(e) =>
                             setSettingValue(
-                                "backgroundParticlesEnabled",
+                                'backgroundParticlesEnabled',
                                 !!e.currentTarget.checked,
                             )
                         }
@@ -35,7 +35,7 @@ const BackgroundSettings = () => {
             <div className="input-group">
                 <label>Particles Settings</label>
                 <p>
-                    You can import your own settings from{" "}
+                    You can import your own settings from{' '}
                     <a
                         href="https://vincentgarreau.com/particles.js/"
                         target="_blank"
@@ -45,7 +45,7 @@ const BackgroundSettings = () => {
                 <textarea
                     onChange={(e) =>
                         setSettingValue(
-                            "backgroundParticlesConfig",
+                            'backgroundParticlesConfig',
                             JSON.parse(e.currentTarget.value),
                         )}
                     value={JSON.stringify(settings.backgroundParticlesConfig)}

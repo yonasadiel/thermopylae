@@ -1,23 +1,23 @@
-import { KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
+import { KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
 import {
     filterBangs,
     loadBangs,
     preprocessBangs,
     processBang,
     recordHistory,
-} from "./util";
-import { Bang, ProcessedBang } from "../../models/terminal";
-import { useSettings } from "../../hooks";
-import "./Terminal.css";
+} from './util';
+import { Bang, ProcessedBang } from '../../models/terminal';
+import { useSettings } from '../../hooks';
+import './Terminal.css';
 
 const Terminal = () => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const [query, setQuery] = useState<string>("");
+    const [query, setQuery] = useState<string>('');
     const [loadedBangs, setLoadedBangs] = useState<Bang[]>([]);
     const { settings } = useSettings();
 
     const filteredBangs = useMemo(() => {
-        const firstWord = query.split(" ")[0] || "";
+        const firstWord = query.split(' ')[0] || '';
         return filterBangs(loadedBangs, firstWord);
     }, [query, loadedBangs]);
     const processedBang = useMemo<ProcessedBang | null>(() => {
@@ -37,19 +37,19 @@ const Terminal = () => {
     }, [settings.terminalURLs]);
 
     const handleKeyDown = (ev?: KeyboardEvent<HTMLInputElement>) => {
-        if (ev?.code === "Enter") {
+        if (ev?.code === 'Enter') {
             if (!!processedBang) {
                 recordHistory(processedBang.history);
                 window.location.replace(processedBang.target);
             } else {
-                console.warn("no bang available"); // TODO: show toast or something
+                console.warn('no bang available'); // TODO: show toast or something
             }
-        } else if (ev?.code === "Tab") {
+        } else if (ev?.code === 'Tab') {
             ev.preventDefault();
             if (!!processedBang && !!processedBang.suggestions) {
                 setQuery(processedBang.suggestions[0]);
             } else {
-                console.warn("no suggestion available"); // TODO: show toast or something
+                console.warn('no suggestion available'); // TODO: show toast or something
             }
         }
     };
