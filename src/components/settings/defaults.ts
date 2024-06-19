@@ -1,6 +1,11 @@
 export const DEFAULT_BACKGROUND_PARTICLES_ENABLED = true;
 export const DEFAULT_IMAGE_PATH = undefined;
+export const DEFAULT_QUOTE_ENABLED = true;
 export const DEFAULT_GROUPS: string[] = [];
+export const DEFAULT_FOREGROUND_COLOR = 'white';
+export const DEFAULT_BACKGROUND_COLOR = 'black';
+export const DEFAULT_PRELOADED_QUOTE = ['pragmatic-programmer', 'programming'];
+export const DEFAULT_CUSTOM_QUOTE = [];
 export const DEFAULT_PARTICLE_SETTINGS = {
     'particles': {
         'number': {
