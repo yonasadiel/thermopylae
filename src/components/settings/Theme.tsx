@@ -30,17 +30,16 @@ const ThemeSettings = () => {
                     onChange={(e) => setSettingValue('themeBackgroundImagePath', e.target.value)} value={settings.themeBackgroundImagePath} />
             </div>
             <div className="input-group">
-                <label>Particles</label>
-                <p>
-                    <input
-                        type="checkbox"
-                        checked={settings.themeBackgroundParticlesEnabled}
-                        onChange={(e) => setSettingValue('themeBackgroundParticlesEnabled', !!e.currentTarget.checked)} />
-                    <span>Enabled</span>
-                </p>
+                <label htmlFor='particles-enabled'>Particles</label>
+                <input
+                    id="particles-enabled"
+                    type="checkbox"
+                    checked={settings.themeBackgroundParticlesEnabled}
+                    onChange={(e) => setSettingValue('themeBackgroundParticlesEnabled', !!e.currentTarget.checked)} />
+                <span>Enabled</span>
             </div>
         </div>
     );
-}
+};
 
 export default ThemeSettings;

@@ -7,4 +7,11 @@ describe('ThemeSettings', () => {
         const result = render(<ThemeSettings />);
         expect(result.baseElement).toMatchSnapshot();
     });
+
+    test('should render correctly when particle is not enabled', async () => {
+        const result = render(<ThemeSettings />);
+        const elem = await result.findByLabelText('Particles')
+        elem.click();
+        expect(result.baseElement).toMatchSnapshot();
+    });
 });

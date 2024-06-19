@@ -145,18 +145,19 @@ exports[`App should render correctly 1`] = `
               <div
                 class="input-group"
               >
-                <label>
+                <label
+                  for="particles-enabled"
+                >
                   Particles
                 </label>
-                <p>
-                  <input
-                    checked=""
-                    type="checkbox"
-                  />
-                  <span>
-                    Enabled
-                  </span>
-                </p>
+                <input
+                  checked=""
+                  id="particles-enabled"
+                  type="checkbox"
+                />
+                <span>
+                  Enabled
+                </span>
               </div>
             </div>
           </div>
