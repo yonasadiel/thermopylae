@@ -1,9 +1,11 @@
 import { Quote } from './quote';
 
 export interface Settings {
-    backgroundImagePath?: string;
-    backgroundParticlesEnabled: boolean;
-    backgroundParticlesConfig: any;
+    themeForegroundColor: string;
+    themeBackgroundColor: string;
+    themeBackgroundImagePath?: string;
+    themeBackgroundParticlesEnabled: boolean;
+    themeBackgroundParticlesConfig: any;
     quoteEnabled: boolean;
     quotePreloaded: string[];
     quoteCustom: Quote[];

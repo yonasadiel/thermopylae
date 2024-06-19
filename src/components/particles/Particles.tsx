@@ -9,12 +9,13 @@ const Particles = () => {
             settings.backgroundParticlesConfig,
             () => { }
         );
-    });
+    }, [settings.themeForegroundColor]);
     return (
         <div
             id="particles-js"
             style={{
-                display: settings.backgroundParticlesEnabled ? 'block' : 'none',
+                display: settings.themeBackgroundParticlesEnabled ? 'block' : 'none',
+                zIndex: 0,
             }}
         ></div>
     );

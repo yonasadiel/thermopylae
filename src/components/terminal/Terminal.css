@@ -7,7 +7,7 @@
 .terminal input {
   width: 100%;
   background: transparent;
-  color: #FFFFFF;
+  color: var(--foreground-color);
   border-width: 0 0 2px 0;
   padding: 5px 0;
   outline: none!important;
@@ -19,18 +19,19 @@
 #bangs {
   position: absolute;
   width: 100%;
-  background-color: rgba(10, 10, 10, .8);
+  background-color: rgba(200, 200, 200, .2);
   z-index: 100;
 }
 
 #bangs .suggestion {
   padding: 0.5em 0 0.5em 0;
-  border: 0 solid #ffffff;
+  border: 0 solid var(--foreground-color);
   border-width: 0 0 0px 0;
 }
 
 #bangs .suggestion .pattern {
   font-size: 24px;
-  color: #aaa;
+  color: var(--foreground-color);
+  opacity: .5;
   margin-bottom: 0.25em;
 }

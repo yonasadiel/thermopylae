@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import BackgroundSettings from './Background';
+import ThemeSettings from './Theme';
 import QuoteSettings from './Quote';
 import TerminalSettings from './Terminal';
 import './Settings.css';
@@ -12,9 +12,9 @@ export interface SettingsProps {
 }
 
 enum MenuName {
-    Background = 'background',
     Quote = 'quote',
     Terminal = 'terminal',
+    Theme = 'theme',
 }
 
 interface Menu {
@@ -24,22 +24,19 @@ interface Menu {
 }
 
 const Menus: Menu[] = [
-    {
-        name: 'Background',
-        type: MenuName.Background,
-        elem: <BackgroundSettings />,
-    },
     { name: 'Quote', type: MenuName.Quote, elem: <QuoteSettings /> },
     { name: 'Terminal', type: MenuName.Terminal, elem: <TerminalSettings /> },
+    {name: 'Theme', type: MenuName.Theme, elem: <ThemeSettings />},
 ];
 
 export default function Settings(props: SettingsProps) {
     const { onClose } = props;
-    const [menu, setMenu] = useState(MenuName.Background);
+    const [menu, setMenu] = useState(MenuName.Theme);
 
     return (
         <div className="settings">
             <div className="close-button" onClick={() => onClose()}>
+                {/* TODO: make this custom color */}
                 <img alt="cross" src="/assets/cross.svg" width="20px" height="20px" />
             </div>
             <div className="navbar">
