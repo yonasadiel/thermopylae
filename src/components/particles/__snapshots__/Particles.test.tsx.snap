@@ -5,7 +5,7 @@ exports[`Particles should render correctly 1`] = `
   <div>
     <div
       id="particles-js"
-      style="display: block;"
+      style="display: block; z-index: 0;"
     />
   </div>
 </body>

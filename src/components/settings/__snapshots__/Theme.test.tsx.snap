@@ -1,11 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BackgroundSettings should render correctly 1`] = `
+exports[`ThemeSettings should render correctly 1`] = `
 <body>
   <div>
     <div
-      class="background-settings"
+      class="theme-settings"
     >
+      <div
+        class="input-group"
+      >
+        <label>
+          Style
+        </label>
+        <p>
+          <input
+            type="color"
+            value="black"
+          />
+          <span>
+            Background Color
+          </span>
+        </p>
+        <p>
+          <input
+            type="color"
+            value="white"
+          />
+          <span>
+            Color
+          </span>
+        </p>
+      </div>
       <div
         class="input-group"
       >

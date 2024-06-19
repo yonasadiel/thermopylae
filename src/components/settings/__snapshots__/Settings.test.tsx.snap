@@ -22,7 +22,7 @@ exports[`Settings should render correctly 1`] = `
         <div
           class="menu active"
         >
-          Background
+          Theme
         </div>
         <div
           class="menu "
@@ -42,8 +42,33 @@ exports[`Settings should render correctly 1`] = `
         class="settings-content"
       >
         <div
-          class="background-settings"
+          class="theme-settings"
         >
+          <div
+            class="input-group"
+          >
+            <label>
+              Style
+            </label>
+            <p>
+              <input
+                type="color"
+                value="black"
+              />
+              <span>
+                Background Color
+              </span>
+            </p>
+            <p>
+              <input
+                type="color"
+                value="white"
+              />
+              <span>
+                Color
+              </span>
+            </p>
+          </div>
           <div
             class="input-group"
           >

@@ -7,6 +7,10 @@ describe('Local Storage DB', () => {
         quoteEnabled: true,
         quoteCustom: [],
         quotePreloaded: [],
+        themeBackgroundColor: '#000000',
+        themeBackgroundImagePath: '',
+        themeForegroundColor: '#ffffff',
+        themeBackgroundParticlesEnabled: true,
     };
 
     test('should save and load', () => {
