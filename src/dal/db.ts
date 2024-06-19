@@ -1,5 +1,5 @@
 export enum ConfigKeys {
-    Settings = "settings",
+    Settings = 'settings',
 }
 
 export interface Database {
