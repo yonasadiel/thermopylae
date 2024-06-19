@@ -9,7 +9,7 @@ const Particles = () => {
             settings.themeBackgroundParticlesConfig,
             () => { }
         );
-    }, [settings.themeForegroundColor]);
+    }, [settings.themeBackgroundParticlesConfig]);
     return (
         <div
             id="particles-js"
