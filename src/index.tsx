@@ -9,8 +9,8 @@ const Index = () => {
     <SettingsContext.Provider value={{ settings, setSettings }}>
       <App />
     </SettingsContext.Provider>
-  );
-};
+  )
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
