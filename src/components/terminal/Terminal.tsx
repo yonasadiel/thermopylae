@@ -1,10 +1,9 @@
-import { KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { KeyboardEvent, useEffect, useMemo, useState } from 'react';
 import { filterBangs, loadBangs, preprocessBangs, processBang, recordHistory } from './util';
 import { Bang, ProcessedBang } from '../../models/terminal';
 import './Terminal.css';
 
 export default function Terminal() {
-    const inputRef = useRef<HTMLInputElement>(null);
     const [query, setQuery] = useState<string>('');
     const [loadedBangs, setLoadedBangs] = useState<Bang[]>([]);
     const filteredBangs = useMemo(() => {
@@ -15,7 +14,6 @@ export default function Terminal() {
         if (!!filteredBangs && filteredBangs.length > 0) return processBang(filteredBangs[0], query)
         return null
     }, [filteredBangs, query]);
-    useEffect(() => { inputRef.current?.focus(); }, [inputRef]);
     useEffect(() => {
         loadBangs().then((res) => {
             const newLoadedBangs = preprocessBangs(res);
@@ -49,7 +47,6 @@ export default function Terminal() {
                 value={query}
                 onChange={(e) => setQuery(e.currentTarget.value)}
                 onKeyDown={(ev) => handleKeyDown(ev)}
-                ref={inputRef}
                 list="bangs" />
             <div
                 id="bangs">
