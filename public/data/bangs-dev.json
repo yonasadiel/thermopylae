@@ -1,0 +1,16 @@
+{
+    "title": "Developer",
+    "bangs": [
+      {
+        "commands": [ "epoch" ],
+        "description": "Epoch converter",
+        "target": "https://www.epochconverter.com/?source=searchbar&q=${epoch}",
+        "params": [
+          {
+            "key": "epoch",
+            "default": "17000000"
+          }
+        ]
+      }
+    ]
+  }

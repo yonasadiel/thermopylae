@@ -1,9 +1,13 @@
 import { Bang, BangConfig, LocalConfig, Param, ParamOption, ProcessedBang, ProcessedParam } from '../../models/terminal';
 
-export const loadBangs = (bangURLs: string[]): Promise<BangConfig[]> => {
+export const loadBangs = (): Promise<BangConfig[]> => {
     // TODO: load this from local storage
+    const BANGS: string[] = [
+        'data/bangs-work.json',
+        'data/bangs-dev.json',
+    ];
     return Promise.all(
-        bangURLs.map((url) => fetch(url).then((res) => res.json()))
+        BANGS.map((url) => fetch(url).then((res) => res.json()))
     );
 }
 
@@ -14,7 +18,7 @@ export const preprocessBangs = (bangConfigs: BangConfig[]): Bang[] => {
             flatten.push({
                 ...bang,
                 source: config.title,
-                params: bang.params.map((p: Param | { template: string }) =>
+                params: bang.params.map((p: Param | { template: string}) =>
                     'template' in p ?
                         { ...config.paramsTemplate[p.template], ...p }
                         : p

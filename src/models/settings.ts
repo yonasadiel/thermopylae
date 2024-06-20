@@ -5,9 +5,7 @@ export interface Settings {
     themeBackgroundColor: string;
     themeBackgroundImagePath?: string;
     themeBackgroundParticlesEnabled: boolean;
-    themeBackgroundParticlesConfig: any;
     quoteEnabled: boolean;
     quotePreloaded: string[];
     quoteCustom: Quote[];
-    terminalURLs: string[];
 }
