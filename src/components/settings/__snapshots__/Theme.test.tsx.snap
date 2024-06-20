@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ThemeSettings should render correctly 1`] = `
+<body>
+  <div>
+    <div
+      class="theme-settings"
+    >
+      <div
+        class="input-group"
+      >
+        <label>
+          Style
+        </label>
+        <p>
+          <input
+            type="color"
+            value="black"
+          />
+          <span>
+            Background Color
+          </span>
+        </p>
+        <p>
+          <input
+            type="color"
+            value="white"
+          />
+          <span>
+            Color
+          </span>
+        </p>
+      </div>
+      <div
+        class="input-group"
+      >
+        <label>
+          Background Image
+        </label>
+        <input
+          type="file"
+          value=""
+        />
+      </div>
+      <div
+        class="input-group"
+      >
+        <label
+          for="particles-enabled"
+        >
+          Particles
+        </label>
+        <input
+          checked=""
+          id="particles-enabled"
+          type="checkbox"
+        />
+        <span>
+          Enabled
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`ThemeSettings should render correctly when particle is not enabled 1`] = `
+<body>
+  <div>
+    <div
+      class="theme-settings"
+    >
+      <div
+        class="input-group"
+      >
+        <label>
+          Style
+        </label>
+        <p>
+          <input
+            type="color"
+            value="black"
+          />
+          <span>
+            Background Color
+          </span>
+        </p>
+        <p>
+          <input
+            type="color"
+            value="white"
+          />
+          <span>
+            Color
+          </span>
+        </p>
+      </div>
+      <div
+        class="input-group"
+      >
+        <label>
+          Background Image
+        </label>
+        <input
+          type="file"
+          value=""
+        />
+      </div>
+      <div
+        class="input-group"
+      >
+        <label
+          for="particles-enabled"
+        >
+          Particles
+        </label>
+        <input
+          checked=""
+          id="particles-enabled"
+          type="checkbox"
+        />
+        <span>
+          Enabled
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;

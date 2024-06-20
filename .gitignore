@@ -5,3 +5,6 @@
 bangs-work.json
 node_modules
 out
+/.vscode
+debug.log
+/coverage

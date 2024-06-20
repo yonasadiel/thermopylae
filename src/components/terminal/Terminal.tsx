@@ -1,4 +1,4 @@
-import { KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { KeyboardEvent, act, useEffect, useMemo, useRef, useState } from 'react';
 import { filterBangs, loadBangs, preprocessBangs, processBang, recordHistory } from './util';
 import { Bang, ProcessedBang } from '../../models/terminal';
 import './Terminal.css';
@@ -12,14 +12,14 @@ export default function Terminal() {
         return filterBangs(loadedBangs, firstWord);
     }, [query, loadedBangs]);
     const processedBang = useMemo<ProcessedBang | null>(() => {
-        if (!!filteredBangs && filteredBangs.length > 0) return processBang(filteredBangs[0], query)
-        return null
+        if (!!filteredBangs && filteredBangs.length > 0) return processBang(filteredBangs[0], query);
+        return null;
     }, [filteredBangs, query]);
     useEffect(() => { inputRef.current?.focus(); }, [inputRef]);
     useEffect(() => {
         loadBangs().then((res) => {
             const newLoadedBangs = preprocessBangs(res);
-            setLoadedBangs(newLoadedBangs);
+            act(() => setLoadedBangs(newLoadedBangs));
             console.log(`Loaded ${newLoadedBangs.length} bangs`);
         });
     }, []);
@@ -40,7 +40,7 @@ export default function Terminal() {
                 console.warn('no suggestion available'); // TODO: show toast or something
             }
         }
-    }
+    };
 
     return (
         <div className="terminal">

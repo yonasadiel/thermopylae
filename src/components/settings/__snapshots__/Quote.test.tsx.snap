@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Quote Settings should render correctly 1`] = `
+<body>
+  <div>
+    <div
+      class="quote-settings"
+    >
+      <div
+        class="input-group"
+      >
+        <label>
+          General
+        </label>
+        <p>
+          <input
+            checked=""
+            type="checkbox"
+          />
+          <span>
+            Enabled
+          </span>
+        </p>
+      </div>
+      <div
+        class="input-group"
+      >
+        <label>
+          Preloaded Quotes
+        </label>
+        <p
+          class="preloaded-option"
+        >
+          <input
+            type="checkbox"
+          />
+          <span>
+            Life Quotes
+          </span>
+        </p>
+        <p
+          class="preloaded-option"
+        >
+          <input
+            checked=""
+            type="checkbox"
+          />
+          <span>
+            Pragmatic Programmer book
+          </span>
+        </p>
+        <p
+          class="preloaded-option"
+        >
+          <input
+            checked=""
+            type="checkbox"
+          />
+          <span>
+            Programming
+          </span>
+        </p>
+      </div>
+      <div
+        class="input-group"
+      >
+        <label>
+          Custom Quotes
+        </label>
+        <p>
+          <button
+            type="button"
+          >
+            add
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+`;

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Particles should render correctly 1`] = `
+<body>
+  <div>
+    <div
+      id="particles-js"
+      style="display: block; z-index: 0;"
+    />
+  </div>
+</body>
+`;

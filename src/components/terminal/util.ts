@@ -2,14 +2,11 @@ import { Bang, BangConfig, LocalConfig, Param, ParamOption, ProcessedBang, Proce
 
 export const loadBangs = (): Promise<BangConfig[]> => {
     // TODO: load this from local storage
-    const BANGS: string[] = [
-        'data/bangs-work.json',
-        'data/bangs-dev.json',
-    ];
+    const BANGS: string[] = [];
     return Promise.all(
         BANGS.map((url) => fetch(url).then((res) => res.json()))
     );
-}
+};
 
 export const preprocessBangs = (bangConfigs: BangConfig[]): Bang[] => {
     const flatten: Bang[] = [];
@@ -18,7 +15,7 @@ export const preprocessBangs = (bangConfigs: BangConfig[]): Bang[] => {
             flatten.push({
                 ...bang,
                 source: config.title,
-                params: bang.params.map((p: Param | { template: string}) =>
+                params: bang.params.map((p: Param | { template: string; }) =>
                     'template' in p ?
                         { ...config.paramsTemplate[p.template], ...p }
                         : p
@@ -49,7 +46,7 @@ export const processBang = (bang: Bang, query: string): ProcessedBang => {
     }));
 
     // 1. Process the query
-    let collectedDependencies: { [key: string]: string } = {};
+    let collectedDependencies: { [key: string]: string; } = {};
     let lastProcessedParamIdx = 0;
     for (let i = 1; i < words.length; i++) {
         const word = words[i];
@@ -133,9 +130,9 @@ export const findOption = (word: string, options?: ParamOption): string | null =
 const RECENCY_FACTOR = 0.05;
 const HISTORY_PRECISION = 100_000;
 
-export const recordHistory = (history: { key: string; value: string }[]): void => {
+export const recordHistory = (history: { key: string; value: string; }[]): void => {
     const terminal = JSON.parse(localStorage.getItem('terminal') || '{}') as LocalConfig;
-    if (!terminal.history) terminal.history = {}
+    if (!terminal.history) terminal.history = {};
     for (let i = 0; i < history.length; i++) {
         const { key, value } = history[i];
         if (!(key in terminal.history)) {
@@ -154,7 +151,7 @@ export const recordHistory = (history: { key: string; value: string }[]): void =
     localStorage.setItem('terminal', JSON.stringify(terminal));
 };
 
-export const loadHistory = (historyKey: string): { [key: string]: number } => {
+export const loadHistory = (historyKey: string): { [key: string]: number; } => {
     const terminal = JSON.parse(localStorage.getItem('terminal') || '{}') as LocalConfig;
     if (!!terminal.history) {
         return terminal.history[historyKey] || {};

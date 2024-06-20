@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Quote should render correctly 1`] = `
+<body>
+  <div>
+    <div
+      class="quote"
+      style="display: flex;"
+    >
+      <div
+        class="text-line"
+      >
+        <span>
+          Defensive Programming
+        </span>
+      </div>
+      <div
+        class="subtext-line"
+      >
+        <span>
+          Defensive programming is a form of defensive design intended to develop programs that are capable of detecting potential security abnormalities and make predetermined responses. It ensures the continuing function of a piece of software under unforeseen circumstances. Defensive programming practices are often used where high availability, safety, or security is needed.
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;

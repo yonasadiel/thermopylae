@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Settings should render correctly 1`] = `
+<body>
+  <div>
+    <div
+      class="settings"
+    >
+      <div
+        class="close-button"
+      >
+        <img
+          alt="cross"
+          height="20px"
+          src="/assets/cross.svg"
+          width="20px"
+        />
+      </div>
+      <div
+        class="navbar"
+      >
+        <div
+          class="menu active"
+        >
+          Theme
+        </div>
+        <div
+          class="menu "
+        >
+          Quote
+        </div>
+        <div
+          class="menu "
+        >
+          Terminal
+        </div>
+      </div>
+      <div
+        class="divider"
+      />
+      <div
+        class="settings-content"
+      >
+        <div
+          class="theme-settings"
+        >
+          <div
+            class="input-group"
+          >
+            <label>
+              Style
+            </label>
+            <p>
+              <input
+                type="color"
+                value="black"
+              />
+              <span>
+                Background Color
+              </span>
+            </p>
+            <p>
+              <input
+                type="color"
+                value="white"
+              />
+              <span>
+                Color
+              </span>
+            </p>
+          </div>
+          <div
+            class="input-group"
+          >
+            <label>
+              Background Image
+            </label>
+            <input
+              type="file"
+              value=""
+            />
+          </div>
+          <div
+            class="input-group"
+          >
+            <label
+              for="particles-enabled"
+            >
+              Particles
+            </label>
+            <input
+              checked=""
+              id="particles-enabled"
+              type="checkbox"
+            />
+            <span>
+              Enabled
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
