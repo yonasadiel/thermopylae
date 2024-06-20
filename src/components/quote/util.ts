@@ -2,6 +2,7 @@ import { PreloadedQuote, Quote } from '../../models/quote';
 
 // Fisher–Yates shuffle, in place
 export function shuffle(array: Quote[]): Quote[] {
+    if (array.length <= 1) return array;
     let currentIndex = array.length, randomIndex;
     let randomSeed = 1337; // Magic number because Math.random() is not seedable
     while (currentIndex !== 0) {
@@ -14,8 +15,8 @@ export function shuffle(array: Quote[]): Quote[] {
 }
 
 
-export function filterPreloadedQuotes(preloadedQuotes: PreloadedQuote[], keys: string[]): Quote[] {
-    const activeQuotes: Quote[] = []
+export function filterPreloadedQuotes(preloadedQuotes: PreloadedQuote[], keys: string[] = []): Quote[] {
+    const activeQuotes: Quote[] = [];
     for (const preloadedName of keys) {
         const preloaded = preloadedQuotes.find((v) => v.name === preloadedName);
         if (!preloaded) continue;

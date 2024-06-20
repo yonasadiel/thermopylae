@@ -10,6 +10,9 @@ const localStorageDB = {
         if (!data) return null;
         return JSON.parse(data);
     },
+    restore<K extends keyof Config>(database: K): void {
+        localStorage.removeItem(database);
+    }
 }
 
 export default localStorageDB;
