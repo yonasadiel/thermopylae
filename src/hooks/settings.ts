@@ -5,7 +5,7 @@ import db from '../dal/storage';
 export const defaultSettings: Settings = {
     themeForegroundColor: 'white',
     themeBackgroundColor: 'black',
-    themeBackgroundImagePath: undefined,
+    themeBackgroundImageBase64: undefined,
     themeBackgroundParticlesEnabled: true,
     quoteEnabled: true,
     quotePreloaded: ['pragmatic-programmer', 'programming'],

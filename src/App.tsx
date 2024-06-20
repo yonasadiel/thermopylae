@@ -16,9 +16,9 @@ const App = () => {
                 "--background-color": settings.themeBackgroundColor,
                 "--foreground-color": settings.themeForegroundColor,
             } as React.CSSProperties}
-            >
+        >
             <Particles />
-            <img src={settings.themeBackgroundImagePath} />
+            <img src={settings.themeBackgroundImageBase64 ? `data:image/jpeg;base64,` +  settings.themeBackgroundImageBase64 : ""} />
             <div className="center">
                 <Terminal />
                 <Quote />
@@ -34,6 +34,6 @@ const App = () => {
             </div>
         </div >
     );
-}
+};
 
 export default App;
