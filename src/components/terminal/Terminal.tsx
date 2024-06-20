@@ -1,40 +1,28 @@
 import { KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
-import {
-    filterBangs,
-    loadBangs,
-    preprocessBangs,
-    processBang,
-    recordHistory,
-} from './util';
+import { filterBangs, loadBangs, preprocessBangs, processBang, recordHistory } from './util';
 import { Bang, ProcessedBang } from '../../models/terminal';
-import { useSettings } from '../../hooks';
 import './Terminal.css';
 
-const Terminal = () => {
+export default function Terminal() {
     const inputRef = useRef<HTMLInputElement>(null);
     const [query, setQuery] = useState<string>('');
     const [loadedBangs, setLoadedBangs] = useState<Bang[]>([]);
-    const { settings } = useSettings();
-
     const filteredBangs = useMemo(() => {
         const firstWord = query.split(' ')[0] || '';
         return filterBangs(loadedBangs, firstWord);
     }, [query, loadedBangs]);
     const processedBang = useMemo<ProcessedBang | null>(() => {
-        if (!!filteredBangs && filteredBangs.length > 0)
-            return processBang(filteredBangs[0], query);
-        return null;
+        if (!!filteredBangs && filteredBangs.length > 0) return processBang(filteredBangs[0], query)
+        return null
     }, [filteredBangs, query]);
+    useEffect(() => { inputRef.current?.focus(); }, [inputRef]);
     useEffect(() => {
-        inputRef.current?.focus();
-    }, [inputRef]);
-    useEffect(() => {
-        loadBangs(settings.terminalURLs).then((bangs) => {
-            const newLoadedBangs = preprocessBangs(bangs);
+        loadBangs().then((res) => {
+            const newLoadedBangs = preprocessBangs(res);
             setLoadedBangs(newLoadedBangs);
             console.log(`Loaded ${newLoadedBangs.length} bangs`);
         });
-    }, [settings.terminalURLs]);
+    }, []);
 
     const handleKeyDown = (ev?: KeyboardEvent<HTMLInputElement>) => {
         if (ev?.code === 'Enter') {
@@ -52,7 +40,7 @@ const Terminal = () => {
                 console.warn('no suggestion available'); // TODO: show toast or something
             }
         }
-    };
+    }
 
     return (
         <div className="terminal">
@@ -62,9 +50,9 @@ const Terminal = () => {
                 onChange={(e) => setQuery(e.currentTarget.value)}
                 onKeyDown={(ev) => handleKeyDown(ev)}
                 ref={inputRef}
-                list="bangs"
-            />
-            <div id="bangs">
+                list="bangs" />
+            <div
+                id="bangs">
                 {!!processedBang && (
                     <>
                         <div className="target">{processedBang.target}</div>
@@ -80,4 +68,3 @@ const Terminal = () => {
     );
 };
 
-export default Terminal;

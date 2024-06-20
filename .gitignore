@@ -5,6 +5,3 @@
 bangs-work.json
 node_modules
 out
-.zed/*
-.vscode/*
-*.log

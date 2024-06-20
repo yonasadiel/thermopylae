@@ -1,38 +1,19 @@
-import * as React from 'react';
 import { useState } from 'react';
 import ThemeSettings from './Theme';
 import QuoteSettings from './Quote';
-import TerminalSettings from './Terminal';
 import './Settings.css';
-import db from '../../dal/storage';
-import { ConfigKeys } from '../../dal/db';
 
 export interface SettingsProps {
-    onClose: () => void;
+    onClose: () => void
 }
 
-enum MenuName {
-    Quote = 'quote',
-    Terminal = 'terminal',
-    Theme = 'theme',
-}
-
-interface Menu {
-    name: string;
-    type: MenuName;
-    elem: React.ReactElement<any, any>;
-}
-
-const Menus: Menu[] = [
-    { name: 'Quote', type: MenuName.Quote, elem: <QuoteSettings /> },
-    { name: 'Terminal', type: MenuName.Terminal, elem: <TerminalSettings /> },
-    {name: 'Theme', type: MenuName.Theme, elem: <ThemeSettings />},
-];
+const MENU_THEME = 'theme';
+const MENU_QUOTE = 'quote';
+const MENU_TERMINAL = 'terminal';
 
 export default function Settings(props: SettingsProps) {
     const { onClose } = props;
-    const [menu, setMenu] = useState(MenuName.Theme);
-
+    const [menu, setMenu] = useState(MENU_THEME);
     return (
         <div className="settings">
             <div className="close-button" onClick={() => onClose()}>
@@ -40,38 +21,20 @@ export default function Settings(props: SettingsProps) {
                 <img alt="cross" src="/assets/cross.svg" width="20px" height="20px" />
             </div>
             <div className="navbar">
-                {Menus.map((item) => (
-                    <MenuItemComponent
-                        isActive={menu == item.name}
-                        onClick={() => setMenu(item.type)}
-                        value={item.name}
-                    />
-                ))}
-                <div className="menu" onClick={() => {
-                    const res = confirm('Are you sure you want to restore defaults?');
-                    if (!res) return;
-                    db.restore(ConfigKeys.Settings);
-                    window.location.reload();
-                }}>
-                    Restore Defaults
-                </div>
+                <div className={`menu ${menu === MENU_THEME ? 'active' : ''}`} onClick={() => setMenu(MENU_THEME)}>Theme</div>
+                <div className={`menu ${menu === MENU_QUOTE ? 'active' : ''}`} onClick={() => setMenu(MENU_QUOTE)}>Quote</div>
+                <div className={`menu ${menu === MENU_TERMINAL ? 'active' : ''}`} onClick={() => setMenu(MENU_TERMINAL)}>Terminal</div>
             </div>
             <div className="divider" />
             <div className="settings-content">
-                {Menus.filter((item) => menu === item.type).map((item) => item.elem)}
+                {menu === MENU_THEME && <ThemeSettings />}
+                {menu === MENU_QUOTE && <QuoteSettings />}
+                {menu === MENU_TERMINAL && <TerminalSettings />}
             </div>
         </div>
-    );
+    )
 }
 
-interface MenuProp {
-    isActive: boolean;
-    value: string;
-    onClick: () => void;
+const TerminalSettings = () => {
+    return <div></div>
 }
-
-const MenuItemComponent = ({ isActive, value, onClick }: MenuProp) => (
-    <div className={`menu${isActive ? ' active' : ''}`} onClick={onClick}>
-        {value}
-    </div>
-);
