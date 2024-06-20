@@ -3,7 +3,7 @@ import { Quote } from './quote';
 export interface Settings {
     themeForegroundColor: string;
     themeBackgroundColor: string;
-    themeBackgroundImagePath?: string;
+    themeBackgroundImageBase64?: string;
     themeBackgroundParticlesEnabled: boolean;
     quoteEnabled: boolean;
     quotePreloaded: string[];
