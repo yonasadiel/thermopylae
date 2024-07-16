@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useCallback, useContext } from 'react';
 import { Settings } from '../models/settings';
 import db from '../dal/storage';
 
@@ -25,11 +25,11 @@ export const SettingsContext = createContext<SettingsContext>({ settings: defaul
 
 const useSettings = () => {
     const { settings, setSettings } = useContext(SettingsContext);
-    const setSettingValue = <K extends keyof Settings>(key: K, value: Settings[K]) => {
+    const setSettingValue = useCallback(<K extends keyof Settings>(key: K, value: Settings[K]) => {
         const newSettings: Settings = { ...settings, [key]: value, };
         db.save('settings', newSettings);
         setSettings(newSettings);
-    }
+    }, [setSettings]);
     return {
         settings,
         setSettingValue,

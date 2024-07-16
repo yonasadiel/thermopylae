@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import Terminal from './components/terminal/Terminal';
 import Quote from './components/quote/Quote';
 import Settings from './components/settings/Settings';
@@ -6,7 +6,7 @@ import Particles from './components/particles/Particles';
 import { useSettings } from './hooks';
 import './App.css';
 
-const App = () => {
+const App = memo(() => {
     const [openSettings, setOpenSettings] = useState<boolean>(false);
     const { settings } = useSettings();
     return (
@@ -34,6 +34,6 @@ const App = () => {
             </div>
         </div >
     );
-}
+});
 
 export default App;

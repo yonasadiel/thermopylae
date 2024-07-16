@@ -32,7 +32,7 @@ export default function Terminal() {
             }
         } else if (ev?.code === 'Tab') {
             ev.preventDefault();
-            if (!!processedBang && !!processedBang.suggestions) {
+            if (!!processedBang && !!processedBang.suggestions?.[0]) {
                 setQuery(processedBang.suggestions[0]);
             } else {
                 console.warn('no suggestion available'); // TODO: show toast or something

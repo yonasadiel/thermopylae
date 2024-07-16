@@ -1,1 +1,2 @@
-export { default as useSettings } from './settings';
+export { default as useSettings } from './useSettings';
+export { default as useDebounceFn } from './useDebounceFn';

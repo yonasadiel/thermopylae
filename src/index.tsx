@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { SettingsContext, getCurrentSettings } from './hooks/settings';
+import { SettingsContext, getCurrentSettings } from './hooks/useSettings';
 
 const Index = () => {
   const [settings, setSettings] = useState(getCurrentSettings());
