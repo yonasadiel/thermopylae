@@ -1,11 +1,14 @@
+import { Clock } from './clock';
 import { Quote } from './quote';
 
 export interface Settings {
     themeForegroundColor: string;
     themeBackgroundColor: string;
-    themeBackgroundImageBase64?: string;
+    themeBackgroundImageEnabled: boolean;
     themeBackgroundParticlesEnabled: boolean;
     quoteEnabled: boolean;
     quotePreloaded: string[];
     quoteCustom: Quote[];
+    clocks: Clock[];
+    clocks12Hour: boolean;
 }

@@ -1,10 +1,25 @@
+import { useCallback } from 'react';
 import { useDebounceFn, useSettings } from '../../hooks';
+import db from '../../dal/storage';
+import { convertBlobToBase64 } from './util';
 import './Theme.css';
 
 const ThemeSettings = () => {
     const { settings, setSettingValue } = useSettings();
     const setBackgroundColor = useDebounceFn((color: string) => setSettingValue('themeBackgroundColor', color), 100, [setSettingValue]);
     const setForegroundColor = useDebounceFn((color: string) => setSettingValue('themeForegroundColor', color), 100, [setSettingValue]);
+
+    const storeBackgroundImage = useCallback((imageBlob?: Blob) => {
+        if (!!imageBlob) {
+            convertBlobToBase64(imageBlob).then((imageBase64) => {
+                db.save('backgroundImage', imageBase64);
+                setSettingValue('themeBackgroundImageEnabled', true);
+            });
+        } else {
+            db.save('backgroundImage', '');
+            setSettingValue('themeBackgroundImageEnabled', false);
+        }
+    }, [setSettingValue]);
 
     return (
         <div className="theme-settings">
@@ -27,21 +42,17 @@ const ThemeSettings = () => {
             </div>
             <div className="input-group">
                 <label>Background Image</label>
+                <p>
+                    <input
+                        type="checkbox"
+                        checked={settings.themeBackgroundImageEnabled}
+                        onChange={(e) => setSettingValue('themeBackgroundImageEnabled', !!e.currentTarget.checked)} />
+                    <span>Enabled</span>
+                </p>
                 <input
                     type="file"
                     accept='image/*'
-                    onChange={(e) => {
-                        const files = e.target.files ?? [];
-                        const fileName = files[0];
-                        const fileData = new FileReader();
-                        let b64Image;
-                        fileData.onload = (e) => {
-                            const result = e.target?.result as ArrayBuffer;
-                            b64Image = btoa(new Uint8Array(result).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-                            setSettingValue('themeBackgroundImageBase64', b64Image);
-                        };
-                        fileData.readAsArrayBuffer(fileName);
-                    }} />
+                    onChange={(e) => { e.target.files?.[0] && storeBackgroundImage(e.target.files?.[0]) }} />
             </div>
             <div className="input-group">
                 <label>Particles</label>

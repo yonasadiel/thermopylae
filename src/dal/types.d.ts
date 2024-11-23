@@ -2,6 +2,7 @@ import { Settings } from '../models/settings';
 
 export type Config = {
     settings: Settings,
+    backgroundImage: string,
 }
 
 export interface Database {

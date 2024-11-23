@@ -1,9 +1,0 @@
-{
-    "manifest_version": 3,
-    "name": "thermopylae",
-    "version": "1.0.0",
-    "description": "https://github.com/yonasadiel/thermopylae",
-    "permissions": [
-        "storage"
-    ]
-}

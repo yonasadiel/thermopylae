@@ -5,11 +5,13 @@ import db from '../dal/storage';
 export const defaultSettings: Settings = {
     themeForegroundColor: 'white',
     themeBackgroundColor: 'black',
-    themeBackgroundImageBase64: undefined,
+    themeBackgroundImageEnabled: false,
     themeBackgroundParticlesEnabled: true,
     quoteEnabled: true,
     quotePreloaded: ['pragmatic-programmer', 'programming'],
     quoteCustom: [],
+    clocks: [{ title: 'Singapore', timezone: 'Asia/Singapore' }],
+    clocks12Hour: true,
 }
 
 export interface SettingsContext {
@@ -18,7 +20,13 @@ export interface SettingsContext {
 }
 
 export const getCurrentSettings = (): Settings => {
-    return db.load('settings') ?? defaultSettings;
+    let settings = db.load('settings') ?? defaultSettings;
+    for (const key in defaultSettings) {
+        if (!(key in settings)) {
+            settings = { ...settings, [key]: defaultSettings[key as keyof Settings] };
+        }
+    }
+    return settings;
 };
 
 export const SettingsContext = createContext<SettingsContext>({ settings: defaultSettings, setSettings: () => {}});

@@ -13,7 +13,6 @@ const Particles = () => {
             id="particles-js"
             style={{
                 display: settings.themeBackgroundParticlesEnabled ? 'block' : 'none',
-                zIndex: 0,
             }}
         ></div>
     );

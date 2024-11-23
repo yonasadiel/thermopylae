@@ -1,0 +1,23 @@
+.clock {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.clock .clock-timezone {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.clock .clock-timezone .time {
+    font-size: 3em;
+}
+
+.clock .clock-timezone .time .ampm{
+    font-size: 0.3em;
+}

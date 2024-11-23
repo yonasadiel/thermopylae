@@ -4,6 +4,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     mode: "production",
     entry: path.resolve(__dirname, "./src/index.tsx"),
+    performance: {
+        maxAssetSize: 512 * 1024,
+        maxEntrypointSize: 512 * 1024,
+    },
     module: {
         rules: [
             {

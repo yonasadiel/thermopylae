@@ -1,10 +1,12 @@
 import { memo, useState } from 'react';
 import Terminal from './components/terminal/Terminal';
+import Clock from './components/clock/Clock';
 import Quote from './components/quote/Quote';
 import Settings from './components/settings/Settings';
 import Particles from './components/particles/Particles';
 import { useSettings } from './hooks';
 import './App.css';
+import db from './dal/storage';
 
 const App = memo(() => {
     const [openSettings, setOpenSettings] = useState<boolean>(false);
@@ -18,9 +20,18 @@ const App = memo(() => {
             } as React.CSSProperties}
         >
             <Particles />
-            <img src={settings.themeBackgroundImageBase64 ? `data:image/jpeg;base64,` +  settings.themeBackgroundImageBase64 : ""} />
+            {settings.themeBackgroundImageEnabled && (
+                <div className="background-image" style={{
+                    width: '100vw',
+                    height: '100vh',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundImage: `url(data:image/jpeg;base64,${db.load('backgroundImage')})`
+                }} />
+            )}
             <div className="center">
                 <Terminal />
+                <Clock />
                 <Quote />
             </div>
             <div className="top-right">
