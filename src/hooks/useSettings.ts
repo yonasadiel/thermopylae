@@ -3,8 +3,8 @@ import db from '../dal/storage';
 import { Settings } from '../models/settings';
 
 export const defaultSettings: Settings = {
-    themeForegroundColor: 'white',
-    themeBackgroundColor: 'black',
+    themeForegroundColor: '#ffffff',
+    themeBackgroundColor: '#000000',
     themeBackgroundImageEnabled: false,
     themeBackgroundParticlesEnabled: true,
     quoteEnabled: false,
@@ -38,7 +38,7 @@ const useSettings = () => {
         const newSettings: Settings = { ...settings, [key]: value, };
         db.save('settings', newSettings);
         setSettings(newSettings);
-    }, [setSettings]);
+    }, [settings, setSettings]);
     return {
         settings,
         setSettingValue,
