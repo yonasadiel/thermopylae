@@ -1,8 +1,8 @@
 {
-    "name": "Yonas New Tab Page",
+    "name": "Thermopylae New Tab Page",
     "version": "0.2.0",
     "manifest_version": 3,
-    "description": "Personal new tab page for Yonas Adiel",
+    "description": "Customizable new tab page with clock, terminal, and more",
     "content_security_policy": {
       "extension_pages": "script-src 'self'; object-src 'self'"
     },
