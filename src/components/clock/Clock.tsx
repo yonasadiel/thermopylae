@@ -1,10 +1,16 @@
+import { useEffect, useState } from 'react';
 import { useSettings } from '../../hooks';
-import { Quote } from '../../models/quote';
-import './Clock.css'
+import './Clock.css';
 
-const Quote = () => {
-    const now = new Date();
+const Clock = () => {
+    const [now, setNow] = useState(new Date());
     const { settings } = useSettings();
+
+    useEffect(() => {
+        setNow(new Date());
+        const interval = setInterval(() => { setNow(new Date()) }, 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <div className="clock">
@@ -12,7 +18,7 @@ const Quote = () => {
                 const time = getTimeInTimezone(now, timezoneSetting.timezone, settings.clocks12Hour);
                 const splitted = time.split(' ');
                 return (
-                    <div className="clock-timezone">
+                    <div className="clock-timezone" key={timezoneSetting.title}>
                         <p className="time">{splitted[0]}{splitted.length > 1 && <span className="ampm">{splitted[1]}</span>}</p>
                         <p className="city">{timezoneSetting.title}</p>
                     </div>
@@ -33,4 +39,4 @@ const getTimeInTimezone = (now: Date, timezone: string, is12Hour: boolean) => {
     return formatter.format(now);
 }
 
-export default Quote;
+export default Clock;
