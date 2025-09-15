@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack --watch",
     "serve": "webpack serve",
-    "build": "webpack"
+    "build": "webpack && cd out && zip -r out.zip . && cd .. && mv out/out.zip ."
   },
   "repository": {
     "type": "git",

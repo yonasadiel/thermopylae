@@ -16,6 +16,9 @@ const Clock = () => {
         <div className="clock">
             {settings.clocks?.map((timezoneSetting) => {
                 const time = getTimeInTimezone(now, timezoneSetting.timezone, settings.clocks12Hour);
+                if (!time) {
+                    return null;
+                }
                 const splitted = time.split(' ');
                 return (
                     <div className="clock-timezone" key={timezoneSetting.title}>
@@ -28,15 +31,20 @@ const Clock = () => {
     );
 }
 
-const getTimeInTimezone = (now: Date, timezone: string, is12Hour: boolean) => {
+const getTimeInTimezone = (now: Date, timezone: string, is12Hour: boolean): string => {
     const options: Intl.DateTimeFormatOptions = {
         hour: '2-digit',
         minute: '2-digit',
         hour12: is12Hour,
         timeZone: timezone,
     };
-    const formatter = new Intl.DateTimeFormat('en-US', options);
-    return formatter.format(now);
+    try {
+        const formatter = new Intl.DateTimeFormat('en-US', options);
+        return formatter.format(now);
+    } catch (e) {
+        console.error(`unable to format time in timezone ${timezone}`, e);
+        return '';
+    }
 }
 
 export default Clock;

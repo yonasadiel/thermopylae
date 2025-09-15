@@ -8,3 +8,4 @@ node_modules
 out
 .vscode/
 debug.log
+out.zip
