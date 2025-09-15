@@ -1,12 +1,13 @@
 import { KeyboardEvent, useMemo, useState } from 'react';
-import { filterBangs, preprocessBangs, processBang, recordHistory } from './util';
-import { ProcessedBang } from '../../models/terminal';
 import useSettings from '../../hooks/useSettings';
+import { ProcessedBang } from '../../models/terminal';
 import './Terminal.css';
+import { filterBangs, preprocessBangs, processBang, recordHistory } from './util';
 
 export default function Terminal() {
     const { settings } = useSettings();
     const [query, setQuery] = useState<string>('');
+    const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number>(-1);
     
     const loadedBangs = useMemo(() => {
         const processedBangs = preprocessBangs(settings.terminalBangConfigs);
@@ -23,6 +24,11 @@ export default function Terminal() {
         return null
     }, [filteredBangs, query]);
 
+    // Reset suggestion index when query changes
+    useMemo(() => {
+        setSelectedSuggestionIndex(-1);
+    }, [query]);
+
     const handleKeyDown = (ev?: KeyboardEvent<HTMLInputElement>) => {
         if (ev?.code === 'Enter') {
             if (!!processedBang) {
@@ -33,10 +39,30 @@ export default function Terminal() {
             }
         } else if (ev?.code === 'Tab') {
             ev.preventDefault();
-            if (!!processedBang && !!processedBang.suggestions?.[0]) {
-                setQuery(processedBang.suggestions[0]);
-            } else {
-                console.warn('no suggestion available'); // TODO: show toast or something
+            if (!!processedBang && processedBang.suggestions.length > 0) {
+                // Cycle through suggestions
+                const nextIndex = (selectedSuggestionIndex + 1) % processedBang.suggestions.length;
+                setSelectedSuggestionIndex(nextIndex);
+            }
+        } else if (ev?.code === 'ArrowDown') {
+            ev.preventDefault();
+            if (!!processedBang && processedBang.suggestions.length > 0) {
+                const nextIndex = (selectedSuggestionIndex + 1) % processedBang.suggestions.length;
+                setSelectedSuggestionIndex(nextIndex);
+            }
+        } else if (ev?.code === 'ArrowUp') {
+            ev.preventDefault();
+            if (!!processedBang && processedBang.suggestions.length > 0) {
+                const prevIndex = selectedSuggestionIndex <= 0 
+                    ? processedBang.suggestions.length - 1 
+                    : selectedSuggestionIndex - 1;
+                setSelectedSuggestionIndex(prevIndex);
+            }
+        } else if (ev?.code === 'ArrowRight' || (ev?.code === 'Space' && selectedSuggestionIndex >= 0)) {
+            if (!!processedBang && selectedSuggestionIndex >= 0 && processedBang.suggestions.length > 0) {
+                ev.preventDefault();
+                // Select current suggestion
+                setQuery(processedBang.suggestions[selectedSuggestionIndex] + ' ');
             }
         }
     }
@@ -54,8 +80,11 @@ export default function Terminal() {
                 {!!processedBang && (
                     <>
                         <div className="target">{processedBang.target}</div>
-                        {processedBang.suggestions.map((suggestion) => (
-                            <div className="suggestion" key={suggestion}>
+                        {processedBang.suggestions.map((suggestion, index) => (
+                            <div 
+                                className={`suggestion ${index === selectedSuggestionIndex ? 'selected' : ''}`} 
+                                key={suggestion}
+                            >
                                 <p className="pattern">{suggestion}</p>
                             </div>
                         ))}
