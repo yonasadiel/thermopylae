@@ -1,4 +1,6 @@
-# Thermopylae: My Personal Chrome Theme
+# Thermopylae
+
+Another take on Chrome New Tab Page
 
 ![](./preview.png)
 
@@ -20,5 +22,5 @@
 ### TODO
 
 1. Change how the quote works, instead of toggling preloaded quotes, make it importable
-2. Enhance terminal suggestion on tab behavuor
-3. Update README with newer screenshots
+2. Update README with newer screenshots
+3. Better UI on settings
