@@ -1,5 +1,6 @@
 import { Clock } from './clock';
 import { Quote } from './quote';
+import { BangConfig } from './terminal';
 
 export interface Settings {
     themeForegroundColor: string;
@@ -11,4 +12,5 @@ export interface Settings {
     quoteCustom: Quote[];
     clocks: Clock[];
     clocks12Hour: boolean;
+    terminalBangConfigs: BangConfig[];
 }

@@ -12,6 +12,7 @@ export const defaultSettings: Settings = {
     quoteCustom: [],
     clocks: [{ title: 'Singapore', timezone: 'Asia/Singapore' }],
     clocks12Hour: true,
+    terminalBangConfigs: [],
 }
 
 export interface SettingsContext {
