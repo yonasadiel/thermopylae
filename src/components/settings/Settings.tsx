@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ClockSettings from '../clock/ClockSettings';
 import QuoteSettings from '../quote/QuoteSettings';
+import TerminalSettings from '../terminal/TerminalSettings';
 import './Settings.css';
 import ThemeSettings from './Theme';
 
@@ -37,8 +38,4 @@ export default function Settings(props: SettingsProps) {
             </div>
         </div>
     )
-}
-
-const TerminalSettings = () => {
-    return <div></div>
 }
