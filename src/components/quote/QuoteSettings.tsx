@@ -1,6 +1,6 @@
-import preloadedQuotes from '../quote/preloaded';
 import { useSettings } from '../../hooks';
 import { Quote } from '../../models/quote';
+import preloadedQuotes from './preloaded';
 import './Quote.css';
 
 const QuoteSettings = () => {
