@@ -1,11 +1,19 @@
-import { KeyboardEvent, useEffect, useMemo, useState } from 'react';
-import { filterBangs, loadBangs, preprocessBangs, processBang, recordHistory } from './util';
-import { Bang, ProcessedBang } from '../../models/terminal';
+import { KeyboardEvent, useMemo, useState } from 'react';
+import { filterBangs, preprocessBangs, processBang, recordHistory } from './util';
+import { ProcessedBang } from '../../models/terminal';
+import useSettings from '../../hooks/useSettings';
 import './Terminal.css';
 
 export default function Terminal() {
+    const { settings } = useSettings();
     const [query, setQuery] = useState<string>('');
-    const [loadedBangs, setLoadedBangs] = useState<Bang[]>([]);
+    
+    const loadedBangs = useMemo(() => {
+        const processedBangs = preprocessBangs(settings.terminalBangConfigs);
+        console.log(`Loaded ${processedBangs.length} bangs from settings`);
+        return processedBangs;
+    }, [settings.terminalBangConfigs]);
+    
     const filteredBangs = useMemo(() => {
         const firstWord = query.split(' ')[0] || '';
         return filterBangs(loadedBangs, firstWord);
@@ -14,13 +22,6 @@ export default function Terminal() {
         if (!!filteredBangs && filteredBangs.length > 0) return processBang(filteredBangs[0], query)
         return null
     }, [filteredBangs, query]);
-    useEffect(() => {
-        loadBangs().then((res) => {
-            const newLoadedBangs = preprocessBangs(res);
-            setLoadedBangs(newLoadedBangs);
-            console.log(`Loaded ${newLoadedBangs.length} bangs`);
-        });
-    }, []);
 
     const handleKeyDown = (ev?: KeyboardEvent<HTMLInputElement>) => {
         if (ev?.code === 'Enter') {
