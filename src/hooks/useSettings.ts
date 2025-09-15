@@ -1,13 +1,13 @@
 import { createContext, useCallback, useContext } from 'react';
-import { Settings } from '../models/settings';
 import db from '../dal/storage';
+import { Settings } from '../models/settings';
 
 export const defaultSettings: Settings = {
     themeForegroundColor: 'white',
     themeBackgroundColor: 'black',
     themeBackgroundImageEnabled: false,
     themeBackgroundParticlesEnabled: true,
-    quoteEnabled: true,
+    quoteEnabled: false,
     quotePreloaded: ['pragmatic-programmer', 'programming'],
     quoteCustom: [],
     clocks: [{ title: 'Singapore', timezone: 'Asia/Singapore' }],
