@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import ThemeSettings from './Theme';
-import QuoteSettings from './Quote';
-import ClockSettings from './Clock';
+import ClockSettings from '../clock/ClockSettings';
+import QuoteSettings from '../quote/QuoteSettings';
 import './Settings.css';
+import ThemeSettings from './Theme';
 
 export interface SettingsProps {
     onClose: () => void
