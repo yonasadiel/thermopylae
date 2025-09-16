@@ -12,5 +12,5 @@
     "icons": {
       "128": "128.png"
     },
-    "permissions": ["storage"]
+    "permissions": []
 }
