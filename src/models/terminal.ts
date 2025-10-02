@@ -1,14 +1,14 @@
 export interface ParamOption {
-    [key: string]: {
-        aliases: string[];
-        dependencies?: { [key: string]: string };
-    };
+    value: string;
+    aliases: string[];
+    aliasGroups: string[];
+    dependencies?: { [key: string]: string };
 }
 
 export interface Param {
     key: string;
     default: string;
-    options?: ParamOption;
+    options?: ParamOption[];
     history?: string;
 }
 
@@ -30,6 +30,7 @@ export interface BangConfig {
         { params: (Param | { template: string })[]}
     )[];
     paramsTemplate: { [key: string]: Param }
+    aliasGroups: { [key: string]: string[] }
 }
 
 export interface ProcessedParam {

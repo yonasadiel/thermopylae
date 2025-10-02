@@ -1,16 +1,9 @@
 import { Bang, BangConfig, LocalConfig, Param, ParamOption, ProcessedBang, ProcessedParam } from '../../models/terminal';
 
-export const loadBangs = (): Promise<BangConfig[]> => {
-    // TODO: load this from local storage
-    const BANGS: string[] = [
-        'data/bangs-work.json',
-        'data/bangs-dev.json',
-    ];
-    return Promise.all(
-        BANGS.map((url) => fetch(url).then((res) => res.json()))
-    );
-}
-
+// preprocessBangs from bang config into a structure that is easy to process.
+// 1. It flattens out bangs from multiple configs to one list of bangs.
+// 2. If the bang has a templated param, we duplicate the template so the processor doesn't need to lookup the template
+// 3. If the bang has an aliasGroups param, we duplicate the aliases from the aliasGroups.
 export const preprocessBangs = (bangConfigs: BangConfig[]): Bang[] => {
     const flatten: Bang[] = [];
     for (const config of bangConfigs) {
@@ -18,32 +11,42 @@ export const preprocessBangs = (bangConfigs: BangConfig[]): Bang[] => {
             flatten.push({
                 ...bang,
                 source: config.title,
-                params: bang.params.map((p: Param | { template: string}) =>
-                    'template' in p ?
-                        { ...config.paramsTemplate[p.template], ...p }
-                        : p
-                )
+                params: bang.params.map((paramOrTemplate: Param | { template: string }) => {
+                    // if the param is a template, load the template.
+                    const p: Param = ('template' in paramOrTemplate) ? { ...config.paramsTemplate[paramOrTemplate.template], ...paramOrTemplate } as Param : paramOrTemplate;
+                    // backward compatibility: old options are an object, we convert them to an array.
+                    if (Object.prototype.toString.apply(p.options) === '[object Object]') {
+                        const oldOptions = ((p.options as unknown) as { [k: string]: ParamOption });
+                        p.options = [];
+                        for (let k in oldOptions) {
+                            p.options.push({ ...oldOptions[k], value: k });
+                        }
+                    }
+                    // We add the aliases from the aliasGroups.
+                    !!p.options && p.options?.forEach((o) => {
+                        !!o.aliasGroups && o.aliasGroups.forEach((a) => {
+                            o.aliases = [...(o.aliases ?? []), ...(config.aliasGroups[a] || [])];
+                        });
+                    });
+                    return p;
+                })
             });
         }
     }
     return flatten;
 };
 
-export const filterBangs = (loadedBangs: Bang[], prefix: string): Bang[] => {
-    return prefix === ''
-        ? []
-        : loadedBangs.filter((b) => (
-            b.commands.findIndex((cmd) => cmd.startsWith(prefix)) !== -1
-        ));
-};
+export const processBang = (processedBangs: Bang[], query: string): ProcessedBang => {
+    const firstWord = query.split(' ')[0] || '';
+    const bang = processedBangs.find((b) => b.commands.findIndex((cmd) => cmd.startsWith(firstWord)) !== -1);
+    if (!bang) return { title: query, history: [], target: '', suggestions: [] };
 
-export const processBang = (bang: Bang, query: string): ProcessedBang => {
     const words = query.split(' ');
     const cmd = bang.commands.find((cmd) => cmd.startsWith(words[0] || '')) || '';
     const processedParams: ProcessedParam[] = bang.params.map((p) => ({
         key: p.key,
         text: p.default,
-        value: findOption(p.default, p.options) || p.default,
+        value: findOption(p.default, p.options)?.value || p.default,
         default: true,
         original: p,
     }));
@@ -58,12 +61,12 @@ export const processBang = (bang: Bang, query: string): ProcessedBang => {
 
         let option = null;
         for (let j = 0; j < bang.params.length; j++) {
-            const o = findOption(word, bang.params[j].options || {});
+            const o = findOption(word, bang.params[j].options);
             if (!!o) {
-                option = o;
+                option = o.value;
                 paramIdx = j;
-                if (!!bang.params[j].options?.[o]?.dependencies) {
-                    collectedDependencies = { ...collectedDependencies, ...bang.params[j].options?.[o].dependencies };
+                if (!!o?.dependencies) {
+                    collectedDependencies = { ...collectedDependencies, ...o.dependencies };
                 }
             }
         }
@@ -76,8 +79,10 @@ export const processBang = (bang: Bang, query: string): ProcessedBang => {
     // 2. Calculate suggestions
     const suggestions: string[] = [];
     if (words.length === 1) {
-        suggestions.push(cmd);
+        // case 1: look for the command
+        suggestions.push(...processedBangs.map((b) => b.commands.find((cmd) => cmd.startsWith(words[0])) || '').filter((v) => v !== ''));
     } else if (!processedParams[lastProcessedParamIdx].original.options) {
+        // case 2: there are no options, so we show history
         const lastWord = words[words.length - 1];
         const historyKey = processedParams[lastProcessedParamIdx].original.history || '';
         const history = loadHistory(historyKey);
@@ -87,9 +92,11 @@ export const processBang = (bang: Bang, query: string): ProcessedBang => {
             .map((k) => words.filter((_, idx) => idx !== words.length - 1).join(' ') + ' ' + k)
         );
     } else {
+        // case 3: show options
         const lastWord = words[words.length - 1];
-        suggestions.push(...Object.keys(processedParams[lastProcessedParamIdx].original.options || {})
-            .filter((v) => v.startsWith(lastWord))
+        suggestions.push(...(processedParams[lastProcessedParamIdx].original.options ?? [])
+            .map((o) => o.value.startsWith(lastWord) ? o.value : o.aliases.find((a) => a.startsWith(lastWord)) || '')
+            .filter((v) => v != '')
             .map((k) => words.filter((_, idx) => idx !== words.length - 1).join(' ') + ' ' + k)
         );
     }
@@ -98,7 +105,7 @@ export const processBang = (bang: Bang, query: string): ProcessedBang => {
     for (let i = 0; i < processedParams.length; i++) {
         const param = processedParams[i];
         if (param.default && param.key in collectedDependencies) {
-            param.value = findOption(collectedDependencies[param.key], processedParams[i].original.options) || '';
+            param.value = findOption(collectedDependencies[param.key], processedParams[i].original.options)?.value ?? '';
             param.text = collectedDependencies[param.key];
         }
     }
@@ -110,18 +117,20 @@ export const processBang = (bang: Bang, query: string): ProcessedBang => {
         target = target.replace('${' + param.key + '}', param.value);
     }
 
-    return {
+    const processedBang = {
         title: [cmd, ...processedParams.map((p) => `[${p.key}:${p.text}]`)].join(' '),
         history: processedParams.filter((p) => !!p.original.history).map((p) => ({ key: p.original.history || '', value: p.value })),
         target: target,
-        suggestions: suggestions,
+        suggestions: suggestions.slice(0, 10),
     };
+    return processedBang
 };
 
-export const findOption = (word: string, options?: ParamOption): string | null => {
-    for (const k in options) {
-        if (k === word || options[k].aliases.findIndex((a) => a === word) !== -1) {
-            return k;
+export const findOption = (word: string, options?: ParamOption[]): ParamOption | null => {
+    if (!options) return null;
+    for (let i=0; i<options?.length; i++) {
+        if (options[i].aliases.findIndex((a) => a === word) !== -1) {
+            return options[i];
         }
     }
     return null;
