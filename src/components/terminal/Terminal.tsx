@@ -2,11 +2,12 @@ import { KeyboardEvent, useMemo, useState } from 'react';
 import useSettings from '../../hooks/useSettings';
 import { ProcessedBang } from '../../models/terminal';
 import './Terminal.css';
-import { filterBangs, preprocessBangs, processBang, recordHistory } from './util';
+import { preprocessBangs, processBang, recordHistory } from './util';
 
 export default function Terminal() {
     const { settings } = useSettings();
     const [query, setQuery] = useState<string>('');
+    const [focused, setFocused] = useState<boolean>(false);
     const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number>(-1);
     
     const loadedBangs = useMemo(() => {
@@ -15,14 +16,9 @@ export default function Terminal() {
         return processedBangs;
     }, [settings.terminalBangConfigs]);
     
-    const filteredBangs = useMemo(() => {
-        const firstWord = query.split(' ')[0] || '';
-        return filterBangs(loadedBangs, firstWord);
-    }, [query, loadedBangs]);
     const processedBang = useMemo<ProcessedBang | null>(() => {
-        if (!!filteredBangs && filteredBangs.length > 0) return processBang(filteredBangs[0], query)
-        return null
-    }, [filteredBangs, query]);
+        return processBang(loadedBangs, query);
+    }, [loadedBangs, query]);
 
     // Reset suggestion index when query changes
     useMemo(() => {
@@ -31,7 +27,10 @@ export default function Terminal() {
 
     const handleKeyDown = (ev?: KeyboardEvent<HTMLInputElement>) => {
         if (ev?.code === 'Enter') {
-            if (!!processedBang) {
+            if (!!processedBang && selectedSuggestionIndex >= 0 && processedBang.suggestions.length > 0) {
+                // Select current suggestion
+                setQuery(processedBang.suggestions[selectedSuggestionIndex] + ' ');
+            } else if (!!processedBang) {
                 recordHistory(processedBang.history);
                 window.location.replace(processedBang.target);
             } else {
@@ -74,10 +73,10 @@ export default function Terminal() {
                 value={query}
                 onChange={(e) => setQuery(e.currentTarget.value)}
                 onKeyDown={(ev) => handleKeyDown(ev)}
+                onFocus={() => setFocused(true)}
                 list="bangs" />
-            <div
-                id="bangs">
-                {!!processedBang && (
+            <div id="bangs">
+                {focused && !!processedBang && (
                     <>
                         <div className="target">{processedBang.target}</div>
                         {processedBang.suggestions.map((suggestion, index) => (

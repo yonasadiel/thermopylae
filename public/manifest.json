@@ -1,6 +1,6 @@
 {
     "name": "Thermopylae New Tab Page",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "manifest_version": 3,
     "description": "Customizable new tab page with clock, terminal, and more",
     "content_security_policy": {
