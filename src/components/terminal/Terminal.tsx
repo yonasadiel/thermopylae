@@ -68,13 +68,16 @@ export default function Terminal() {
 
     return (
         <div className="terminal">
-            <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.currentTarget.value)}
-                onKeyDown={(ev) => handleKeyDown(ev)}
-                onFocus={() => setFocused(true)}
-                list="bangs" />
+            <div className="input-container">
+                <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.currentTarget.value)}
+                    onKeyDown={(ev) => handleKeyDown(ev)}
+                    onFocus={() => setFocused(true)}
+                    list="bangs" />
+                <p className="placeholder">{processedBang?.title || ''}</p>
+            </div>
             <div id="bangs">
                 {focused && !!processedBang && (
                     <>

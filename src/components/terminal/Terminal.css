@@ -4,7 +4,13 @@
   position: relative;
 }
 
-.terminal input {
+.terminal .input-container {
+  position: relative;
+  height: 40px;
+}
+
+.terminal .input-container input {
+  position: absolute;
   width: 100%;
   background: transparent;
   color: var(--foreground-color);
@@ -14,6 +20,20 @@
   font-family: 'Raleway', sans-serif;
   font-size: 24px;
   text-align: left;
+  z-index: 2;
+}
+
+.terminal .input-container .placeholder {
+  position: absolute;
+  font-size: 24px;
+  color: var(--foreground-color);
+  padding: 5px 0;
+  opacity: .5;
+  z-index: 1;
+}
+
+.terminal .target {
+  word-wrap: break-word;
 }
 
 #bangs {

@@ -7,9 +7,10 @@ export interface ParamOption {
 
 export interface Param {
     key: string;
-    default: string;
+    default?: string;
     options?: ParamOption[];
     history?: string;
+    hideInPlaceholder?: boolean;
 }
 
 export interface Bang {
@@ -37,7 +38,7 @@ export interface ProcessedParam {
     key: string;
     text: string;
     value: string;
-    default: boolean;
+    isDefault: boolean;
     original: Param;
 }
 

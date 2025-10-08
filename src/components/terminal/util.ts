@@ -37,26 +37,30 @@ export const preprocessBangs = (bangConfigs: BangConfig[]): Bang[] => {
 };
 
 export const processBang = (processedBangs: Bang[], query: string): ProcessedBang => {
-    const firstWord = query.split(' ')[0] || '';
+    query = query.trimEnd();
+    const words = query.split(' ');
+    const firstWord = words[0] || '';
+    const lastWord = words[words.length - 1];
     const bang = processedBangs.find((b) => b.commands.findIndex((cmd) => cmd.startsWith(firstWord)) !== -1);
     if (!bang) return { title: query, history: [], target: '', suggestions: [] };
 
-    const words = query.split(' ');
-    const cmd = bang.commands.find((cmd) => cmd.startsWith(words[0] || '')) || '';
-    const processedParams: ProcessedParam[] = bang.params.map((p) => ({
-        key: p.key,
-        text: p.default,
-        value: findOption(p.default, p.options)?.value || p.default,
-        default: true,
-        original: p,
-    }));
+    const processedParams: ProcessedParam[] = bang.params.map((p) => {
+        const defaultValue = p.default ?? (!!p.options && p.options.length > 0 ? p.options[0].value : ''); // use default. if undefined, take the first option.
+        return {
+            key: p.key,
+            text: defaultValue, 
+            value: findOption(defaultValue, p.options)?.value ?? defaultValue,
+            isDefault: true,
+            original: p,
+        };
+    });
 
     // 1. Process the query
     let collectedDependencies: { [key: string]: string } = {};
     let lastProcessedParamIdx = 0;
     for (let i = 1; i < words.length; i++) {
         const word = words[i];
-        let paramIdx = processedParams.findIndex((p) => p.default);
+        let paramIdx = processedParams.findIndex((p) => p.isDefault);
         if (paramIdx === -1) continue;
 
         let option = null;
@@ -72,7 +76,7 @@ export const processBang = (processedBangs: Bang[], query: string): ProcessedBan
         }
         processedParams[paramIdx].text = word;
         processedParams[paramIdx].value = !!option ? option : word;
-        processedParams[paramIdx].default = false;
+        processedParams[paramIdx].isDefault = false;
         lastProcessedParamIdx = paramIdx;
     }
 
@@ -83,7 +87,7 @@ export const processBang = (processedBangs: Bang[], query: string): ProcessedBan
         suggestions.push(...processedBangs.map((b) => b.commands.find((cmd) => cmd.startsWith(words[0])) || '').filter((v) => v !== ''));
     } else if (!processedParams[lastProcessedParamIdx].original.options) {
         // case 2: there are no options, so we show history
-        const lastWord = words[words.length - 1];
+        
         const historyKey = processedParams[lastProcessedParamIdx].original.history || '';
         const history = loadHistory(historyKey);
         suggestions.push(...Object.keys(history)
@@ -104,7 +108,7 @@ export const processBang = (processedBangs: Bang[], query: string): ProcessedBan
     // 3. Fill the rest of params, with dependency in mind
     for (let i = 0; i < processedParams.length; i++) {
         const param = processedParams[i];
-        if (param.default && param.key in collectedDependencies) {
+        if (param.isDefault && param.key in collectedDependencies) {
             param.value = findOption(collectedDependencies[param.key], processedParams[i].original.options)?.value ?? '';
             param.text = collectedDependencies[param.key];
         }
@@ -118,11 +122,12 @@ export const processBang = (processedBangs: Bang[], query: string): ProcessedBan
     }
 
     const processedBang = {
-        title: [cmd, ...processedParams.map((p) => `[${p.key}:${p.text}]`)].join(' '),
+        title: [firstWord, ...processedParams.filter((p) => !p.original.hideInPlaceholder).map((p) => p.text)].join(' '),
         history: processedParams.filter((p) => !!p.original.history).map((p) => ({ key: p.original.history || '', value: p.value })),
         target: target,
         suggestions: suggestions.slice(0, 10),
     };
+    if (query.length === 0) processedBang.title = '';
     return processedBang
 };
 
