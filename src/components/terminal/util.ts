@@ -36,9 +36,10 @@ export const preprocessBangs = (bangConfigs: BangConfig[]): Bang[] => {
     return flatten;
 };
 
-export const processBang = (processedBangs: Bang[], query: string): ProcessedBang => {
-    query = query.trimEnd();
-    const words = query.split(' ');
+export const processBang = (processedBangs: Bang[], rawQuery: string): ProcessedBang => {
+    const endedWithSpace = rawQuery.endsWith(' ');
+    const query = rawQuery.trimEnd();
+    const words = query.split(' ').filter((w) => w.length > 0);
     const firstWord = words[0] || '';
     const lastWord = words[words.length - 1];
     const bang = processedBangs.find((b) => b.commands.findIndex((cmd) => cmd.startsWith(firstWord)) !== -1);
@@ -57,7 +58,7 @@ export const processBang = (processedBangs: Bang[], query: string): ProcessedBan
 
     // 1. Process the query
     let collectedDependencies: { [key: string]: string } = {};
-    let lastProcessedParamIdx = 0;
+    let lastProcessedParamIdx = -1;
     for (let i = 1; i < words.length; i++) {
         const word = words[i];
         let paramIdx = processedParams.findIndex((p) => p.isDefault);
@@ -81,27 +82,31 @@ export const processBang = (processedBangs: Bang[], query: string): ProcessedBan
     }
 
     // 2. Calculate suggestions
+    const suggestionParamIdx = !endedWithSpace ? lastProcessedParamIdx : processedParams.findIndex((p) => p.isDefault);
     const suggestions: string[] = [];
-    if (words.length === 1) {
+    if (words.length === 1 && !endedWithSpace) {
         // case 1: look for the command
         suggestions.push(...processedBangs.map((b) => b.commands.find((cmd) => cmd.startsWith(words[0])) || '').filter((v) => v !== ''));
-    } else if (!processedParams[lastProcessedParamIdx].original.options) {
+    } else if (suggestionParamIdx !== -1 && !processedParams[suggestionParamIdx].original.options) {
         // case 2: there are no options, so we show history
-        
-        const historyKey = processedParams[lastProcessedParamIdx].original.history || '';
+        const historyKey = processedParams[suggestionParamIdx].original.history || '';
         const history = loadHistory(historyKey);
         suggestions.push(...Object.keys(history)
             .filter((v) => v.startsWith(lastWord))
             .sort((a, b) => history[a] < history[b] ? 1 : -1)
             .map((k) => words.filter((_, idx) => idx !== words.length - 1).join(' ') + ' ' + k)
         );
-    } else {
-        // case 3: show options
-        const lastWord = words[words.length - 1];
-        suggestions.push(...(processedParams[lastProcessedParamIdx].original.options ?? [])
+    } else if (suggestionParamIdx !== -1) {
+        // case 3: show options. the best option is shown first.
+        const lastWord = endedWithSpace ? '' : words[words.length - 1];
+        const prefix = endedWithSpace ? query : words.filter((_, idx) => idx !== words.length - 1).join(' ')
+        const bestOption = findOption(lastWord, processedParams[suggestionParamIdx].original.options)
+        if (!!bestOption) suggestions.push(prefix + ' ' + (bestOption.value.startsWith(lastWord) ? bestOption.value : bestOption.aliases.find((a) => a.startsWith(lastWord)) || ''))
+        suggestions.push(...(processedParams[suggestionParamIdx].original.options ?? [])
+            .filter((o) => o.value != bestOption?.value) // exclude the best option
             .map((o) => o.value.startsWith(lastWord) ? o.value : o.aliases.find((a) => a.startsWith(lastWord)) || '')
             .filter((v) => v != '')
-            .map((k) => words.filter((_, idx) => idx !== words.length - 1).join(' ') + ' ' + k)
+            .map((k) => prefix + ' ' + k)
         );
     }
 
@@ -122,7 +127,7 @@ export const processBang = (processedBangs: Bang[], query: string): ProcessedBan
     }
 
     const processedBang = {
-        title: [firstWord, ...processedParams.filter((p) => !p.original.hideInPlaceholder).map((p) => p.text)].join(' '),
+        title: query + ' ' + processedParams.filter((p) => !p.original.hideInPlaceholder && p.isDefault).map((p) => p.text).join(' '),
         history: processedParams.filter((p) => !!p.original.history).map((p) => ({ key: p.original.history || '', value: p.value })),
         target: target,
         suggestions: suggestions.slice(0, 10),
@@ -134,7 +139,7 @@ export const processBang = (processedBangs: Bang[], query: string): ProcessedBan
 export const findOption = (word: string, options?: ParamOption[]): ParamOption | null => {
     if (!options) return null;
     for (let i=0; i<options?.length; i++) {
-        if (options[i].aliases.findIndex((a) => a === word) !== -1) {
+        if (!!options[i].aliases && options[i].aliases.findIndex((a) => a === word) !== -1) {
             return options[i];
         }
     }

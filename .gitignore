@@ -3,7 +3,7 @@
 *.pem
 *.pak
 
-bangs-work.json
+data/bangs-*.json
 node_modules
 out
 .vscode/
