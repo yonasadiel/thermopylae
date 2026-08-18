@@ -9,6 +9,7 @@ export interface Param {
     key: string;
     default?: string;
     options?: ParamOption[];
+    regex: string;
     history?: string;
     hideInPlaceholder?: boolean;
 }

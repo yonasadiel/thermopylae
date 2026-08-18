@@ -61,9 +61,11 @@ export const processBang = (processedBangs: Bang[], rawQuery: string): Processed
     let lastProcessedParamIdx = -1;
     for (let i = 1; i < words.length; i++) {
         const word = words[i];
+        // strategy 1: find the first index that is still in the default value
         let paramIdx = processedParams.findIndex((p) => p.isDefault);
         if (paramIdx === -1) continue;
 
+        // strategy 2: find options that match the input word
         let option = null;
         for (let j = 0; j < bang.params.length; j++) {
             const o = findOption(word, bang.params[j].options);
@@ -75,8 +77,20 @@ export const processBang = (processedBangs: Bang[], rawQuery: string): Processed
                 }
             }
         }
+        // strategy 3: find param that is still in the default value and match the word
+        if (option === null) {
+            for (let j = 0; j < bang.params.length; j++) {
+                if (!processedParams[j].isDefault) continue;
+                const regex = bang.params[j].regex;
+                if (!regex) continue;
+                if (word.match(regex)) {
+                    paramIdx = j;
+                    break;
+                }
+            }
+        }
         processedParams[paramIdx].text = word;
-        processedParams[paramIdx].value = !!option ? option : word;
+        processedParams[paramIdx].value = option !== null ? option : word;
         processedParams[paramIdx].isDefault = false;
         lastProcessedParamIdx = paramIdx;
     }
