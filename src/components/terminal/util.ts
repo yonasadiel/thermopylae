@@ -137,7 +137,7 @@ export const processBang = (processedBangs: Bang[], rawQuery: string): Processed
     let target = bang.target;
     for (let i = 0; i < processedParams.length; i++) {
         const param = processedParams[i];
-        target = target.replace('${' + param.key + '}', param.value);
+        target = target.replaceAll('${' + param.key + '}', param.value);
     }
 
     const processedBang = {
